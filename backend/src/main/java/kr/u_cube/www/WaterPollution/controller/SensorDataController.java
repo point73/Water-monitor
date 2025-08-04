@@ -1,8 +1,11 @@
 package kr.u_cube.www.WaterPollution.controller;
 
-import kr.u_cube.www.WaterPollution.entity.SensorData;
-import kr.u_cube.www.WaterPollution.repository.SensorDataRepository;
+import java.util.List;
+
+import kr.u_cube.www.WaterPollution.dto.LatestSensorDto;
+import kr.u_cube.www.WaterPollution.service.SensorDataService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/sensor")
 public class SensorDataController {
 
-    private final SensorDataRepository sensorDataRepository;
+    private final SensorDataService sensorDataService;
 
-    @GetMapping("/latest")
-    public ResponseEntity<SensorData> getLatestSensorData() {
-        return sensorDataRepository.findTopByOrderByMeasuredAtDesc()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.noContent().build());
+    @GetMapping("/latest/all")
+    public ResponseEntity<List<LatestSensorDto>> getLatestDataPerDevice() {
+        List<LatestSensorDto> list = sensorDataService.getLatestPerDevice();
+        return ResponseEntity.ok(list);
     }
 }

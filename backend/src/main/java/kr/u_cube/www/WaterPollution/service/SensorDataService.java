@@ -1,9 +1,14 @@
 package kr.u_cube.www.WaterPollution.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import kr.u_cube.www.WaterPollution.dto.LatestSensorDto;
 import kr.u_cube.www.WaterPollution.dto.SensorDataDto;
 import kr.u_cube.www.WaterPollution.entity.SensorData;
 import kr.u_cube.www.WaterPollution.entity.SensorInfo;
@@ -33,7 +38,7 @@ public class SensorDataService {
                 });
 
         SensorData entity = SensorData.builder()
-                .sensorInfo(new SensorInfo(dto.getDeviceId()))
+                .sensorInfo(sensorInfo)
                 .ph(dto.getPh())
                 .doValue(dto.getDoValue())
                 .temperature(dto.getTemperature())
@@ -44,5 +49,29 @@ public class SensorDataService {
                 .build();
 
         sensorDataRepository.save(entity);
+    }
+
+    public List<LatestSensorDto> getLatestPerDevice() {
+        List<SensorData> allData = sensorDataRepository.findAll();
+
+        // deviceId 기준 최신 데이터만 추출
+        Map<String, SensorData> latestMap = allData.stream()
+                .collect(Collectors.toMap(
+                        sd -> sd.getSensorInfo().getDeviceId(),
+                        sd -> sd,
+                        (existing, replacement) -> existing.getMeasuredAt().isAfter(replacement.getMeasuredAt()) ? existing : replacement
+                ));
+
+        return latestMap.values().stream()
+                .map(sd -> new LatestSensorDto(
+                        sd.getSensorInfo().getDeviceId(),
+                        sd.getPh(),
+                        sd.getDoValue(),
+                        sd.getTemperature(),
+                        sd.getEc(),
+                        sd.getTurbidity(),
+                        sd.getMeasuredAt()
+                ))
+                .toList();
     }
 }
