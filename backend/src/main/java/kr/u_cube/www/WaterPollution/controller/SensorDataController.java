@@ -21,4 +21,14 @@ public class SensorDataController {
         List<LatestSensorDto> list = sensorDataService.getLatestPerDevice();
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/{deviceid}")
+    public ResponseEntity<LatestSensorDto> getLatestDataByDeviceId(@PathVariable("deviceid") String deviceId) {
+        LatestSensorDto latestData = sensorDataService.getLatestByDeviceId(deviceId);
+        if (latestData == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(latestData);
+    }
+
 }

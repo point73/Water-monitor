@@ -58,8 +58,9 @@ public class SensorDataService {
                 .collect(Collectors.toMap(
                         sd -> sd.getSensorInfo().getDeviceId(),
                         sd -> sd,
-                        (existing, replacement) -> existing.getMeasuredAt().isAfter(replacement.getMeasuredAt()) ? existing : replacement
-                ));
+                        (existing, replacement) -> existing.getMeasuredAt().isAfter(replacement.getMeasuredAt())
+                                ? existing
+                                : replacement));
 
         return latestMap.values().stream()
                 .map(sd -> new LatestSensorDto(
@@ -69,8 +70,22 @@ public class SensorDataService {
                         sd.getTemperature(),
                         sd.getEc(),
                         sd.getTurbidity(),
-                        sd.getMeasuredAt()
-                ))
+                        sd.getMeasuredAt()))
                 .toList();
     }
+
+    public LatestSensorDto getLatestByDeviceId(String deviceId) {
+    return sensorDataRepository.findTopBySensorInfo_DeviceIdOrderByMeasuredAtDesc(deviceId)
+            .map(entity -> new LatestSensorDto(
+                    entity.getSensorInfo().getDeviceId(),
+                    entity.getPh(),
+                    entity.getDoValue(),
+                    entity.getTemperature(),
+                    entity.getEc(),
+                    entity.getTurbidity(),
+                    entity.getMeasuredAt()
+            ))
+            .orElse(null);
+}
+
 }

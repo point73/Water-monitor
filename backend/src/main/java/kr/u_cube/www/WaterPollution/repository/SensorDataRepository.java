@@ -1,6 +1,7 @@
 package kr.u_cube.www.WaterPollution.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,7 @@ public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
                 ON sd.device_id = latest.device_id AND sd.measured_at = latest.max_measured_at
             """, nativeQuery = true)
     List<SensorData> findLatestEachDevice();
+
+    Optional<SensorData> findTopBySensorInfo_DeviceIdOrderByMeasuredAtDesc(String deviceId);
+
 }

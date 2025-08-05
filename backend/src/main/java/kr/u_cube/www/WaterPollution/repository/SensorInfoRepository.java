@@ -10,5 +10,6 @@ import kr.u_cube.www.WaterPollution.entity.SensorInfo;
 @Repository
 public interface SensorInfoRepository extends JpaRepository<SensorInfo, Long> {
     Optional<SensorInfo> findByDeviceId(String deviceId);
+
 }
 
