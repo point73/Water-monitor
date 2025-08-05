@@ -19,7 +19,8 @@ public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
                     FROM sensor_data
                     GROUP BY device_id
                 ) latest
-                ON sd.device_id = latest.device_id AND sd.measured_at = latest.max_measured_at
+                ON sd.device_id = latest.device_id
+                   AND sd.measured_at = latest.max_measured_at
             """, nativeQuery = true)
     List<SensorData> findLatestEachDevice();
 

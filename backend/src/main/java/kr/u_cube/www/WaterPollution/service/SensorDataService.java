@@ -43,6 +43,12 @@ public class SensorDataService {
                 .temperature(dto.getTemperature())
                 .ec(dto.getEc())
                 .turbidity(dto.getTurbidity())
+                .bod(dto.getBod())
+                .tp(dto.getTp())
+                .tn(dto.getTn())
+                .ss(dto.getSs())
+                .chlorophyllA(dto.getChlorophyllA())
+                .no3n(dto.getNo3n())
                 .measuredAt(dto.getMeasuredAt())
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -70,6 +76,12 @@ public class SensorDataService {
                         sd.getTemperature(),
                         sd.getEc(),
                         sd.getTurbidity(),
+                        sd.getBod(),
+                        sd.getTp(),
+                        sd.getTn(),
+                        sd.getSs(),
+                        sd.getChlorophyllA(),
+                        sd.getNo3n(),
                         sd.getMeasuredAt()))
                 .toList();
     }
@@ -83,6 +95,12 @@ public class SensorDataService {
                     entity.getTemperature(),
                     entity.getEc(),
                     entity.getTurbidity(),
+                    entity.getBod(),
+                    entity.getTp(),
+                    entity.getTn(),
+                    entity.getSs(),
+                    entity.getChlorophyllA(),
+                    entity.getNo3n(),
                     entity.getMeasuredAt()
             ))
             .orElse(null);

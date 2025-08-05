@@ -2,6 +2,7 @@ package kr.u_cube.www.WaterPollution.dto;
 
 import java.time.LocalDateTime;
 
+import kr.u_cube.www.WaterPollution.entity.SensorData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,5 +15,11 @@ public class LatestSensorDto {
     private double temperature;
     private double ec;
     private double turbidity;
+    private double bod;
+    private double tp;
+    private double tn;
+    private double ss;
+    private double chlorophyllA;
+    private double no3n;
     private LocalDateTime measuredAt;
 }
