@@ -2,7 +2,6 @@ package kr.u_cube.www.WaterPollution.dto;
 
 import java.time.LocalDateTime;
 
-import kr.u_cube.www.WaterPollution.entity.SensorData;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
