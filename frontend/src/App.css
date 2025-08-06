@@ -1,133 +1,135 @@
+/* 전체 레이아웃 설정 */
 html, body, #root {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  background-color: #10141c;
-  color: #f1f3f5;
-  box-sizing: border-box;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #f1f5f9;
 }
 
-.app {
+/* 전체 레이아웃 컨테이너 */
+.layout-container {
   display: flex;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
 
+/* 사이드바 */
 .sidebar {
   width: 240px;
-  background: #151a28;
+  background-color: #1e293b;
+  color: white;
+  padding: 24px;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  justify-content: space-between;
 }
 
-.sidebar-logo {
-  font-size: 24px;
+/* 사이드바 상단 제목 */
+.sidebar-title {
+  font-size: 22px;
   font-weight: bold;
-  color: #00d4ff;
-  margin-bottom: 40px;
-  text-align: center;
+  color: #38bdf8;
+  margin-bottom: 32px;
 }
 
+/* 사이드바 메뉴 */
 .sidebar-menu {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.sidebar-link {
-  color: #b0bec5;
-  text-decoration: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  transition: all 0.2s;
+/* 사이드바 하단 달력 */
+.sidebar-calendar {
+  background-color: #334155;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+.react-calendar__month-view__weekdays__weekday {
+  color: black !important;
 }
 
-.sidebar-link:hover,
-.sidebar-link.active {
-  background-color: #00d4ff22;
-  color: #ffffff;
-}
-
-.main-layout {
+/* 메인 콘텐츠 */
+.main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
-
-.main-header {
-  padding: 20px 32px;
-  background-color: #1e2636;
-  font-size: 20px;
-  font-weight: 600;
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-.main-content {
-  flex: 1;
   padding: 24px;
   overflow-y: auto;
-  background-color: #10141c;
+  box-sizing: border-box;
 }
 
-.footer {
-  padding: 16px;
-  text-align: center;
-  background-color: #151a28;
-  color: #888;
-  font-size: 13px;
-}
-
-h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #00d4ff;
-  border-left: 4px solid #00d4ff;
-  padding-left: 12px;
-}
-
-table {
+/* 지도 섹션 */
+.map-section {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   width: 100%;
-  border-collapse: collapse;
-  background-color: #1e2636;
+  height: 500px;
+  box-sizing: border-box;
+}
+
+/* 하단 카드들 */
+.bottom-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 100%;
+}
+
+.card {
+  flex: 1 1 0;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  min-width: 300px;
+}
+
+.status-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.status-card {
+  padding: 12px 16px;
   border-radius: 8px;
-  overflow: hidden;
-  color: #e0eaf0;
-  font-size: 15px;
-}
-
-th, td {
-  padding: 16px;
-  text-align: left;
-  border-bottom: 1px solid #2e374a;
-}
-
-th {
-  background-color: #2a3448;
   font-weight: 600;
-  color: #b0bec5;
+  font-size: 16px;
+}
+.status-danger {
+  background-color: #ffe5e5;
+  color: #d32f2f;
+  border-left: 6px solid #d32f2f;
+}
+.status-warning {
+  background-color: #fff7e5;
+  color: #ffa000;
+  border-left: 6px solid #ffa000;
+}
+.status-normal {
+  background-color: #e5ffe5;
+  color: #388e3c;
+  border-left: 6px solid #388e3c;
 }
 
-/* 예측 결과 강조 색상 */
-tr.danger {
-  background-color: #ff4d4f33;
-  color: #ff4d4f;
-  font-weight: bold;
-}
-
-tr.warning {
-  background-color: #faad1433;
-  color: #faad14;
-  font-weight: bold;
-}
-
-tr.safe {
-  background-color: #52c41a33;
-  color: #52c41a;
+/* leaflet 크기 강제 지정 */
+.leaflet-container {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 10px;
+  overflow: hidden;
 }
