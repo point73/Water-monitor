@@ -1,8 +1,27 @@
-// src/components/PredictionChart.jsx
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-function PredictionChart({ selectedRegion, predictionData }) {
+function PredictionChart({ selectedRegion }) {
+  // 데이터 준비
+  const predictionData = selectedRegion?.predictions
+    ? {
+        labels: selectedRegion.predictions.map(p => p.date),
+        datasets: [
+          {
+            label: '예측 오염도',
+            data: selectedRegion.predictions.map(p => p.value),
+            fill: true,
+            backgroundColor: 'rgba(75,192,192,0.2)',
+            borderColor: 'rgba(75,192,192,1)',
+            tension: 0.4
+          }
+        ]
+      }
+    : {
+        labels: [],
+        datasets: []
+      };
+
   return (
     <div style={{
       backgroundColor: '#ffffff',
