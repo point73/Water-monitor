@@ -87,6 +87,27 @@ function SensorBoxes({ selectedSensorData }) {
                 <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
               </div>
             )}
+            {key === 'doValue' && (
+              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+                <span style={{ color: 'red' }}>▲</span> 위험
+                <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
+                <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
+              </div>
+            )}
+            {key === 'bod' && (
+              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+                <span style={{ color: 'red' }}>▲</span> 위험
+                <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
+                <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
+              </div>
+            )}
+              {key === 'cod' && (
+              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+                <span style={{ color: 'red' }}>▲</span> 위험
+                <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
+                <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
+              </div>
+            )}
           </div>
         );
       })}

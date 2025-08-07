@@ -8,12 +8,19 @@ html, body, #root {
   background-color: #f1f5f9;
 }
 
-/* 전체 레이아웃 컨테이너 */
-.layout-container {
-  display: flex;
-  width: 100vw;
+/* 전체 컨테이너 */
+.app-container {
+  background-color: #1f2937;
+  padding: 20px;
   height: 100vh;
+  box-sizing: border-box;
   overflow: hidden;
+}
+
+.app-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 /* 사이드바 */
@@ -29,107 +36,77 @@ html, body, #root {
   justify-content: space-between;
 }
 
-/* 사이드바 상단 제목 */
-.sidebar-title {
-  font-size: 22px;
-  font-weight: bold;
-  color: #38bdf8;
-  margin-bottom: 32px;
-}
-
-/* 사이드바 메뉴 */
-.sidebar-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* 사이드바 하단 달력 */
-.sidebar-calendar {
-  background-color: #334155;
-  border-radius: 10px;
-  padding: 12px;
-  text-align: center;
-  font-size: 14px;
-}
-.react-calendar__month-view__weekdays__weekday {
-  color: black !important;
-}
-
 /* 메인 콘텐츠 */
 .main-content {
-  flex: 1;
+  flex-grow: 1;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  gap: 20px;
+  background-color: #f3f4f6;
+  border-radius: 40px;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* 지도 섹션 */
-.map-section {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  width: 100%;
-  height: 500px;
-  box-sizing: border-box;
-}
-
-/* 하단 카드들 */
-.bottom-cards {
+/* 상단 센서 카드 줄 */
+.dashboard-sensor-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  width: 100%;
+  gap: 20px;
 }
 
-.card {
-  flex: 1 1 0;
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  min-width: 300px;
+/* 하단 지도 + 카드 줄 */
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 260px); /* 상단 센서카드 높이 제외한 나머지 */
+  min-height: 400px;
 }
 
-.status-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* 왼쪽 카드 열 */
+.left-column {
+  flex: 0.45;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
+  height: 100%;
 }
 
-.status-card {
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 16px;
-}
-.status-danger {
-  background-color: #ffe5e5;
-  color: #d32f2f;
-  border-left: 6px solid #d32f2f;
-}
-.status-warning {
-  background-color: #fff7e5;
-  color: #ffa000;
-  border-left: 6px solid #ffa000;
-}
-.status-normal {
-  background-color: #e5ffe5;
-  color: #388e3c;
-  border-left: 6px solid #388e3c;
+/* 지도 wrapper */
+.map-wrapper {
+  flex: 0.55;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-/* leaflet 크기 강제 지정 */
+/* 지도 카드 */
+.map-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* leaflet 지도 */
 .leaflet-container {
   width: 100% !important;
   height: 100% !important;
-  border-radius: 10px;
-  overflow: hidden;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .dashboard-row {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-column,
+  .map-wrapper {
+    height: 400px;
+  }
 }
