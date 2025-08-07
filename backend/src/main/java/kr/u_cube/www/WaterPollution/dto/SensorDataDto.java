@@ -16,8 +16,8 @@ public class SensorDataDto {
     private double temperature;
     private double ec;
     private double turbidity;
-
     private double bod;
+    private double cod;
     private double tp;
     private double tn;
     private double ss;

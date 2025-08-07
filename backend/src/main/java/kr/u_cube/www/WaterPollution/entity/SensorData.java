@@ -41,6 +41,7 @@ public class SensorData {
 
     // 추가 (이미지 표 기준)
     private double bod;          // BOD (생물화학적 산소요구량)
+    private double cod;          // COD (화학적 산소요구량)
     private double tp;           // T-P (총인)
     private double tn;           // T-N (총질소)
     private double ss;           // SS (부유물질)

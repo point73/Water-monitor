@@ -45,6 +45,7 @@ public class SensorDataService {
                                 .ec(dto.getEc())
                                 .turbidity(dto.getTurbidity())
                                 .bod(dto.getBod())
+                                .cod(dto.getCod())
                                 .tp(dto.getTp())
                                 .tn(dto.getTn())
                                 .ss(dto.getSs())
@@ -94,6 +95,7 @@ public class SensorDataService {
                                                 entity.getEc(),
                                                 entity.getTurbidity(),
                                                 entity.getBod(),
+                                                entity.getCod(),
                                                 entity.getTp(),
                                                 entity.getTn(),
                                                 entity.getSs(),
