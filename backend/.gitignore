@@ -36,5 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-application.yml
+### 보안 파일 ###
 .env
