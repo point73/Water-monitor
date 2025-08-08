@@ -13,7 +13,6 @@ public class LatestSensorDto {
     private double doValue;
     private double temperature;
     private double ec;
-    private double turbidity;
     private double bod;
     private double cod;
     private double tp;

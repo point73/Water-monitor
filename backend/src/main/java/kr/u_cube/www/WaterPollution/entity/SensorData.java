@@ -32,14 +32,10 @@ public class SensorData {
     @JoinColumn(name = "device_id")
     private SensorInfo sensorInfo;
 
-    // 기존
     private double ph;           // pH
     private double doValue;      // DO (용존산소)
     private double temperature;  // 수온 (Temp)
     private double ec;           // 전기전도도 (EC)
-    private double turbidity;    // 탁도 (SS 등과 별도로 관리 가능)
-
-    // 추가 (이미지 표 기준)
     private double bod;          // BOD (생물화학적 산소요구량)
     private double cod;          // COD (화학적 산소요구량)
     private double tp;           // T-P (총인)
