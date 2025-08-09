@@ -32,17 +32,17 @@ public class SensorData {
     @JoinColumn(name = "device_id")
     private SensorInfo sensorInfo;
 
-    private double ph;           // pH
-    private double doValue;      // DO (용존산소)
-    private double temperature;  // 수온 (Temp)
-    private double ec;           // 전기전도도 (EC)
-    private double bod;          // BOD (생물화학적 산소요구량)
-    private double cod;          // COD (화학적 산소요구량)
-    private double tp;           // T-P (총인)
-    private double tn;           // T-N (총질소)
-    private double ss;           // SS (부유물질)
-    private double chlorophyllA; // Chlorophyll-a (엽록소-a)
-    private double no3n;         // NO3-N (질산성 질소)
+    private Double ph;           // pH
+    private Double doValue;      // DO (용존산소)
+    private Double temperature;  // 수온 (Temp)
+    private Double ec;           // 전기전도도 (EC)
+    private Double bod;          // BOD (생물화학적 산소요구량)
+    private Double cod;          // COD (화학적 산소요구량)
+    private Double tp;           // T-P (총인)
+    private Double tn;           // T-N (총질소)
+    private Double ss;           // SS (부유물질)
+    private Double chlorophyllA; // Chlorophyll-a (엽록소-a)
+    private Double no3n;         // NO3-N (질산성 질소)
 
     private LocalDateTime measuredAt; // 측정 시각
     private LocalDateTime createdAt;  // 저장 시각

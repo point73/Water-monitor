@@ -1,5 +1,6 @@
 package kr.u_cube.www.WaterPollution.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import kr.u_cube.www.WaterPollution.dto.HistoryDataDto;
 import kr.u_cube.www.WaterPollution.entity.SensorData;
 
 @Repository
@@ -25,5 +27,35 @@ public interface SensorDataRepository extends JpaRepository<SensorData, Long> {
     List<SensorData> findLatestEachDevice();
 
     Optional<SensorData> findTopBySensorInfo_DeviceIdOrderByMeasuredAtDesc(String deviceId);
+
+    @Query("""
+            SELECT new kr.u_cube.www.WaterPollution.dto.HistoryDataDto(
+                si.deviceId,
+                si.ptno,
+                si.name,
+                si.type,
+                si.lat,
+                si.lon,
+                si.location,
+                sd.measuredAt,
+                sd.ph,
+                sd.doValue,
+                sd.temperature,
+                sd.ec,
+                sd.bod,
+                sd.cod,
+                sd.tp,
+                sd.tn,
+                sd.ss,
+                sd.chlorophyllA,
+                sd.no3n
+            )
+            FROM SensorData sd
+            JOIN sd.sensorInfo si
+            WHERE sd.measuredAt BETWEEN :start AND :end
+            ORDER BY sd.measuredAt
+
+                        """)
+    List<HistoryDataDto> findHistoryDataByTimestampBetween(LocalDateTime start, LocalDateTime end);
 
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import kr.u_cube.www.WaterPollution.dto.HistoryDataDto;
 import kr.u_cube.www.WaterPollution.dto.LatestSensorDto;
 import kr.u_cube.www.WaterPollution.dto.SensorDataDto;
 import kr.u_cube.www.WaterPollution.dto.SensorInfoDto;
@@ -81,7 +82,7 @@ public class SensorDataService {
                                                         info.getLon());
                                 })
                                 .toList();
-                        
+
         }
 
         public LatestSensorDto getLatestByDeviceId(String deviceId) {
@@ -102,5 +103,9 @@ public class SensorDataService {
                                                 entity.getMeasuredAt()))
                                 .orElse(null);
         }
+
+        public List<HistoryDataDto> getHistory(LocalDateTime start, LocalDateTime end) {
+        return sensorDataRepository.findHistoryDataByTimestampBetween(start, end);
+    }
 
 }
