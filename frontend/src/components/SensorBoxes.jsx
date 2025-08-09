@@ -73,7 +73,7 @@ function SensorBoxes({ selectedSensorData }) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-            <h4 style={{ marginBottom: '6px', fontWeight: 'bold', color: '#475569', fontSize: '1.3em' }}>{sensorLabels[key]}</h4>
+            <h4 style={{ marginBottom: '6px', fontWeight: 'bold', color: '#475569', fontSize: '3em' }}>{sensorLabels[key]}</h4>
             <p style={{ fontSize: '2.2em', fontWeight: 'bold', color: '#0f172a' }}>
               {sensorValue !== undefined ? sensorValue.toFixed(1) : '-'}
             </p>
@@ -81,28 +81,28 @@ function SensorBoxes({ selectedSensorData }) {
               {status}
             </p>
             {key === 'ph' && (
-              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+              <div style={{ fontSize: '1.3em', color: '#666', marginTop: '5px' }}>
                 <span style={{ color: 'red' }}>▲</span> 위험
                 <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
                 <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
               </div>
             )}
             {key === 'doValue' && (
-              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+              <div style={{ fontSize: '1.3em', color: '#666', marginTop: '5px' }}>
                 <span style={{ color: 'red' }}>▲</span> 위험
                 <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
                 <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
               </div>
             )}
             {key === 'bod' && (
-              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+              <div style={{ fontSize: '1.3em', color: '#666', marginTop: '5px' }}>
                 <span style={{ color: 'red' }}>▲</span> 위험
                 <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
                 <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
               </div>
             )}
               {key === 'cod' && (
-              <div style={{ fontSize: '1.0em', color: '#666', marginTop: '5px' }}>
+              <div style={{ fontSize: '1.3em', color: '#666', marginTop: '5px' }}>
                 <span style={{ color: 'red' }}>▲</span> 위험
                 <span style={{ color: 'orange', marginLeft: '5px' }}>●</span> 주의
                 <span style={{ color: 'green', marginLeft: '5px' }}>▼</span> 정상
