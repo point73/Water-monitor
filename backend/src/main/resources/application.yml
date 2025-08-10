@@ -32,3 +32,6 @@ mqtt:
   broker: ${MQTT_BROKER}
   topic: ${MQTT_TOPIC}
 
+alert:
+  email:
+    recipient: ${MAIL_USERNAME}
