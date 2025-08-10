@@ -1,7 +1,9 @@
-package kr.u_cube.www.WaterPollution.service;
+package kr.u_cube.www.WaterPollution.service.sensor;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import kr.u_cube.www.WaterPollution.service.email.EmailService;
 
 @Component
 @RequiredArgsConstructor

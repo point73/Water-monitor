@@ -3,8 +3,9 @@ package kr.u_cube.www.WaterPollution.mqtt;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import kr.u_cube.www.WaterPollution.service.SensorDataService;
 import kr.u_cube.www.WaterPollution.dto.SensorDataDto;
+import kr.u_cube.www.WaterPollution.service.sensor.SensorDataService;
+
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Component

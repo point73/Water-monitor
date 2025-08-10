@@ -1,4 +1,4 @@
-package kr.u_cube.www.WaterPollution.service;
+package kr.u_cube.www.WaterPollution.service.email;
 
 import org.springframework.stereotype.Service;
 

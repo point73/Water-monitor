@@ -1,4 +1,4 @@
-package kr.u_cube.www.WaterPollution.service;
+package kr.u_cube.www.WaterPollution.service.sensor;
 
 import java.time.LocalDateTime;
 import java.util.List;
