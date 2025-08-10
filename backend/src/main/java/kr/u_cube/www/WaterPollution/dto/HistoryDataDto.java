@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/* 
+ * 날짜 별 데이터 조회 시 사용
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
