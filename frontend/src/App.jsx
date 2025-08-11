@@ -38,7 +38,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://192.168.111.114:8085/api/sensor/latest/all");
+        const res = await axios.get("http://localhost:8085/api/sensor/latest/all");
         const fetched = Array.isArray(res.data?.data) ? res.data.data : res.data;
         setDeviceListData(fetched);
       } catch (err) {
@@ -54,7 +54,7 @@ function App() {
   const handleRegionClick = async (deviceData) => {
     setSelectedRegion(deviceData);
     try {
-      const sensorRes = await axios.get(`http://192.168.111.114:8085/api/sensor/${deviceData.deviceId}`);
+      const sensorRes = await axios.get(`http://localhost:8085/api/sensor/${deviceData.deviceId}`);
       setSelectedSensorData(sensorRes.data?.data || sensorRes.data);
     } catch (err) {
       console.error("❌ 센서 데이터 호출 실패:", err);
@@ -88,7 +88,7 @@ function App() {
                 <div className="map-wrapper" style={{ flex: 0.65 }}>
                   {/* --- 여기를 수정했습니다 (지도 잘림 문제 해결) --- */}
                   <div className="map-card" style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 className="map-title">🌐 전국 오염 지도</h2>
+                    <h2 className="map-title" style={{ fontSize: '35px', color:"black" }}>🌐 전국 오염 지도</h2>
                     <div className="map-container" style={{ flexGrow: 1 }}>
                       <MapDashboard
                         onRegionClick={handleRegionClick}

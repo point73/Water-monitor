@@ -42,7 +42,7 @@ function MapDashboard({
           color: "#666",
         }}
       >
-                지도 데이터 로딩 중...      {" "}
+        지도 데이터 로딩 중...
       </div>
     );
   } // 데이터 로딩이 끝난 후 (성공, 실패, 데이터 없음 모두 포함) 항상 지도를 렌더링합니다.
@@ -57,7 +57,6 @@ function MapDashboard({
         boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
       }}
     >
-           {" "}
       <MapContainer // 데이터가 성공적으로 로드되면 첫 번째 디바이스 위치로, 아니면 대한민국 중심으로 지도를 엽니다.
         center={[36.6099760003, 127.754672]}
         zoom={8}
@@ -65,19 +64,16 @@ function MapDashboard({
         wheelPxPerZoomLevel={120} // 기본값은 60, 클수록 더 많이 스크롤해야 줌됨
         style={{ height: "100%", width: "100%" }}
       >
-                <ResizeMap />
-               {" "}
+        <ResizeMap />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-                       {" "}
         {/* deviceListData가 있을 때만 Circle을 렌더링합니다. 
 
           '옵셔널 체이닝(?.')을 사용하여 deviceListData가 null이나 undefined일 때 에러가 발생하는 것을 방지합니다.
 
         */}
-               {" "}
         {deviceListData?.map((device, idx) => (
           <Circle
             key={idx}
@@ -100,22 +96,16 @@ function MapDashboard({
               },
             }}
           >
-                      {" "}
             <Popup>
-                           {" "}
-              <strong style={{ fontSize: "1.2em" }}>{device.name}</strong> (ID:{" "}
-              {device.deviceId})               <br />             {" "}
+              <strong style={{ fontSize: '1.2em' }}>{device.name}</strong> (ID: {device.deviceId})
+              <br />
               <span style={{ fontSize: "1.1em" }}>위도: {device.lat}</span>
-                            <br />             {" "}
-              <span style={{ fontSize: "1.1em" }}>경도: {device.lon}</span>     
-                   {" "}
+              <br />
+              <span style={{ fontSize: "1.1em" }}>경도: {device.lon}</span>
             </Popup>
-                     {" "}
           </Circle>
         ))}
-             {" "}
       </MapContainer>
-         {" "}
     </div>
   );
 }

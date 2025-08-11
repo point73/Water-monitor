@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 // 백엔드 주소
-const BASE_URL = "http://192.168.111.114:8085";
+const BASE_URL = "http://localhost:8085";
 
 function TimeRangePage() {
   const todayStr = new Date().toISOString().slice(0, 10);

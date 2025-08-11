@@ -85,7 +85,13 @@ function SensorBoxes({ selectedSensorData }) {
                   {label}
                 </p>
             </div>
-            <p style={{ margin: '8px 0 0 0', fontSize: '44px', fontWeight: 'bold', color: '#2D3748', alignSelf: 'center' }}>
+            <p style={{
+              margin: '8px 0 0 0', 
+              fontSize: '44px', 
+              fontWeight: 'bold', 
+              color: status.color, // 상태에 따라 색상 변경
+              alignSelf: 'center' 
+            }}>
               {sensorValue !== undefined ? sensorValue.toFixed(1) : '-'}
               <span style={{ fontSize: '20px', marginLeft: '6px', color: '#4A5568', fontWeight: '500' }}>{unit}</span>
             </p>

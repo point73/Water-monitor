@@ -7,7 +7,6 @@ function Sidebar({ date, setDate, setActivePage }) {
     <aside style={{
       width: '360px', 
       backgroundColor: '#1f2937',
-      // --- 여기를 수정했습니다 (전체적인 간격 조정) ---
       padding: '30px 20px',
       boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
       display: 'flex',
@@ -20,24 +19,20 @@ function Sidebar({ date, setDate, setActivePage }) {
         <h1 style={{ fontSize: '26px', fontWeight: 'bold', marginBottom: '25px', color: '#e5e7eb', textAlign: 'center' }}>
           PPAP 프로젝트
         </h1>
-        {/* --- 여기를 수정했습니다 (버튼 사이 간격) --- */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           <button 
             onClick={() => setActivePage('dashboard')} 
-            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '20px' }}>
+            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '30px' }}>
             대시보드 홈
           </button>
           <button 
-            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '20px' }}>
-            수질 지표별 조회
+            onClick={() => setActivePage('standards')} // 'standards' 페이지로 이동하도록 설정 (임시)
+            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '30px' }}>
+            수질 환경 기준
           </button>
           <button 
             onClick={() => setActivePage('timeRange')} 
-            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '20px' }}>
-            시간 범위 선택
-          </button>
-          <button 
-            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '20px' }}>
+            style={{ backgroundColor: '#3b82f6', color: 'white', padding: '14px', borderRadius: '6px', border: 'none', cursor: 'pointer', fontSize: '30px' }}>
             데이터 다운로드
           </button>
         </div>
