@@ -144,6 +144,9 @@ function MapDashboard({
         scrollWheelZoom={true}
         wheelPxPerZoomLevel={120}
         style={{ height: "100%", width: "100%" }}
+        className="custom-map-container"
+        preferCanvas={true}
+        renderer={L.canvas()}
       >
         <ResizeMap />
         <TileLayer

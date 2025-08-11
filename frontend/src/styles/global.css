@@ -58,7 +58,44 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* 달력 스타일 */
+/* 지도 타일 그리드 선 완전 제거 */
+.leaflet-tile-pane {
+  filter: none !important;
+}
+
+.leaflet-tile {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+.leaflet-tile-container {
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.leaflet-layer {
+  border: none !important;
+  outline: none !important;
+}
+
+/* 타일 이미지 자체의 테두리 제거 */
+.leaflet-tile img {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 타일 로딩 상태에서도 테두리 제거 */
+.leaflet-tile-loaded,
+.leaflet-tile-loading {
+  border: none !important;
+  outline: none !important;
+}
 .react-calendar {
   width: 100%;
   max-width: 445px;
@@ -132,7 +169,7 @@ button:focus-visible {
 .react-calendar__month-view__weekdays abbr {
   text-decoration: none;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px; /* 16px에서 20px로 증가 */
 }
 
 .react-calendar__month-view__weekdays__weekday abbr {
@@ -148,7 +185,7 @@ button:focus-visible {
 }
 
 .react-calendar__tile {
-  font-size: 18px;
+  font-size: 28px; /* 더 크게! */
   font-weight: 600;
   position: relative;
   background-color: transparent !important;
@@ -161,6 +198,7 @@ button:focus-visible {
 
 .react-calendar__tile abbr {
   color: #424242;
+  font-size: 24px; /* abbr 태그도 같은 크기 */
 }
 
 .react-calendar__tile.saturday-date,
@@ -229,8 +267,8 @@ button:focus-visible {
   left: 0;
   right: 0;
   bottom: 0;
-  width: 32px;
-  height: 32px;
+  width: 36px; /* 32px에서 36px로 증가 */
+  height: 36px; /* 32px에서 36px로 증가 */
   margin: auto;
   border-radius: 50%;
   background-color: #7C97FE;
