@@ -66,24 +66,30 @@ function App() {
       <div className="app-layout">
         <Sidebar date={date} setDate={setDate} setActivePage={setActivePage} />
 
-        <main className="main-content">
+        <main className="main-content" style={{ gap: '30px' }}>
           {activePage === 'dashboard' && (
             <>
               <SensorBoxes selectedSensorData={selectedSensorData} />
 
-              <div className="dashboard-row">
-                <div className="left-column">
-                  <AnomalyDetection />
-                  <PredictionChart
-                    regionName={selectedRegion?.name}
-                    predictionData={selectedPredictionData}
-                  />
+              <div className="dashboard-row" style={{ gap: '30px' }}>
+                {/* --- 여기를 수정했습니다 (지도 너비 조정을 위해 비율 변경) --- */}
+                <div className="left-column" style={{ flex: 0.35 }}>
+                  <div style={{ flex: 0.4, display: 'flex' }}>
+                    <AnomalyDetection />
+                  </div>
+                  <div style={{ flex: 0.6, display: 'flex' }}>
+                    <PredictionChart
+                      regionName={selectedRegion?.name}
+                      predictionData={selectedPredictionData}
+                    />
+                  </div>
                 </div>
 
-                <div className="map-wrapper">
-                  <div className="map-card">
-                    <h2 className="map-title">🗺 전국 오염 지도</h2>
-                    <div className="map-container">
+                <div className="map-wrapper" style={{ flex: 0.65 }}>
+                  {/* --- 여기를 수정했습니다 (지도 잘림 문제 해결) --- */}
+                  <div className="map-card" style={{ display: 'flex', flexDirection: 'column' }}>
+                    <h2 className="map-title">🌐 전국 오염 지도</h2>
+                    <div className="map-container" style={{ flexGrow: 1 }}>
                       <MapDashboard
                         onRegionClick={handleRegionClick}
                         deviceListData={deviceListData}
