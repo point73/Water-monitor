@@ -9,9 +9,8 @@ import kr.u_cube.www.WaterPollution.repository.SensorInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;  // ì¶”ê°€ëœ import
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class SensorInfoService {
     private final SensorInfoRepository sensorInfoRepository;
     
     /**
-     * ëª¨ë“  ì„¼ì„œ ì •ë³´ ì¡°íšŒ
+     * ¸ğµç ¼¾¼­ Á¤º¸ Á¶È¸
      */
     public List<SensorInfoDto> getAllSensors() {
         return sensorInfoRepository.findAll().stream()
@@ -32,7 +31,7 @@ public class SensorInfoService {
     }
     
     /**
-     * íŠ¹ì • ì„¼ì„œ ì •ë³´ ì¡°íšŒ
+     * Æ¯Á¤ ¼¾¼­ Á¤º¸ Á¶È¸
      */
     public Optional<SensorInfoDto> getSensorByDeviceId(String deviceId) {
         return sensorInfoRepository.findByDeviceId(deviceId)
@@ -40,13 +39,13 @@ public class SensorInfoService {
     }
     
     /**
-     * ì„¼ì„œ ì •ë³´ ì—…ë°ì´íŠ¸ (ë¶€ë¶„ ì—…ë°ì´íŠ¸ ì§€ì›)
+     * ¼¾¼­ Á¤º¸ ¾÷µ¥ÀÌÆ® (ºÎºĞ ¾÷µ¥ÀÌÆ® Áö¿ø)
      */
     public SensorInfoDto updateSensorInfo(String deviceId, SensorInfoUpdateDto updateDto) {
         SensorInfo sensorInfo = sensorInfoRepository.findByDeviceId(deviceId)
-                .orElseThrow(() -> new RuntimeException("ì„¼ì„œë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: " + deviceId));
+                .orElseThrow(() -> new RuntimeException("¼¾¼­¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù: " + deviceId));
         
-        // nullì´ ì•„ë‹Œ í•„ë“œë§Œ ì—…ë°ì´íŠ¸ (ë¶€ë¶„ ì—…ë°ì´íŠ¸)
+        // nullÀÌ ¾Æ´Ñ ÇÊµå¸¸ ¾÷µ¥ÀÌÆ® (ºÎºĞ ¾÷µ¥ÀÌÆ®)
         if (updateDto.getName() != null) {
             sensorInfo.setName(updateDto.getName());
         }
@@ -68,18 +67,18 @@ public class SensorInfoService {
         
         SensorInfo updatedSensor = sensorInfoRepository.save(sensorInfo);
         
-        log.info("âœ… ì„¼ì„œ ì •ë³´ ì—…ë°ì´íŠ¸ ì™„ë£Œ: {} -> {}", deviceId, updateDto);
+        log.info("? ¼¾¼­ Á¤º¸ ¾÷µ¥ÀÌÆ® ¿Ï·á: {} -> {}", deviceId, updateDto);
         
         return convertToDto(updatedSensor);
     }
     
     /**
-     * ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •ëœ ì„¼ì„œë“¤ ì¡°íšŒ (ì—…ë°ì´íŠ¸ í•„ìš”í•œ ì„¼ì„œë“¤)
+     * ±âº»°ªÀ¸·Î ¼³Á¤µÈ ¼¾¼­µé Á¶È¸ (¾÷µ¥ÀÌÆ® ÇÊ¿äÇÑ ¼¾¼­µé)
      */
     public List<SensorInfoDto> getSensorsNeedingUpdate() {
         List<SensorInfo> sensorsNeedingUpdate = sensorInfoRepository.findAll().stream()
                 .filter(sensor -> 
-                    "ì„¼ì„œ ì´ë¦„ ì—†ìŒ".equals(sensor.getName()) || 
+                    "¼¾¼­ ÀÌ¸§ ¾øÀ½".equals(sensor.getName()) || 
                     "unknown".equals(sensor.getLocation()) ||
                     sensor.getLat() == 0.0 || 
                     sensor.getLon() == 0.0
@@ -92,20 +91,20 @@ public class SensorInfoService {
     }
     
     /**
-     * ì„¼ì„œ ì •ë³´ ì‚­ì œ
+     * ¼¾¼­ Á¤º¸ »èÁ¦
      */
     public boolean deleteSensorInfo(String deviceId) {
         Optional<SensorInfo> sensorInfo = sensorInfoRepository.findByDeviceId(deviceId);
         if (sensorInfo.isPresent()) {
             sensorInfoRepository.delete(sensorInfo.get());
-            log.info("ğŸ—‘ï¸ ì„¼ì„œ ì •ë³´ ì‚­ì œ ì™„ë£Œ: {}", deviceId);
+            log.info("?? ¼¾¼­ Á¤º¸ »èÁ¦ ¿Ï·á: {}", deviceId);
             return true;
         }
         return false;
     }
     
     /**
-     * ì„¼ì„œ í†µê³„ ì •ë³´
+     * ¼¾¼­ Åë°è Á¤º¸
      */
     public Map<String, Object> getSensorStatistics() {
         List<SensorInfo> allSensors = sensorInfoRepository.findAll();
@@ -113,7 +112,7 @@ public class SensorInfoService {
         long totalSensors = allSensors.size();
         long configuredSensors = allSensors.stream()
                 .filter(sensor -> 
-                    !"ì„¼ì„œ ì´ë¦„ ì—†ìŒ".equals(sensor.getName()) && 
+                    !"¼¾¼­ ÀÌ¸§ ¾øÀ½".equals(sensor.getName()) && 
                     !"unknown".equals(sensor.getLocation()) &&
                     sensor.getLat() != 0.0 && 
                     sensor.getLon() != 0.0
@@ -131,7 +130,7 @@ public class SensorInfoService {
     }
     
     /**
-     * SensorInfoë¥¼ SensorInfoDtoë¡œ ë³€í™˜
+     * SensorInfo¸¦ SensorInfoDto·Î º¯È¯
      */
     private SensorInfoDto convertToDto(SensorInfo sensorInfo) {
         return new SensorInfoDto(
