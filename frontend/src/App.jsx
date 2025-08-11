@@ -10,7 +10,9 @@ import {
   Legend,
   Filler,
 } from 'chart.js';
-import axios from 'axios';
+
+// API import
+import { sensorApi } from './api';
 
 // 컴포넌트
 import MapDashboard from './components/MapDashboard';
@@ -21,7 +23,7 @@ import PredictionChart from './components/PredictionChart';
 import TimeRangePage from './components/TimeRangePage';
 
 // 스타일
-import './App.css';
+import './styles/layout.css';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend, Filler);
 
@@ -35,29 +37,36 @@ function App() {
   const [selectedSensorData, setSelectedSensorData] = useState(null);
   const [selectedPredictionData, setSelectedPredictionData] = useState(null);
 
+  // 전체 센서 데이터 로드
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDeviceData = async () => {
       try {
-        const res = await axios.get("http://localhost:8085/api/sensor/latest/all");
-        const fetched = Array.isArray(res.data?.data) ? res.data.data : res.data;
-        setDeviceListData(fetched);
-      } catch (err) {
-        console.error("전체 디바이스 목록 API 오류:", err);
+        setIsDeviceListLoading(true);
+        setDeviceListHasError(false);
+        
+        const data = await sensorApi.getAllLatestSensorData();
+        setDeviceListData(data);
+      } catch (error) {
+        console.error("전체 디바이스 목록 API 오류:", error);
         setDeviceListHasError(true);
       } finally {
         setIsDeviceListLoading(false);
       }
     };
-    fetchData();
+
+    fetchDeviceData();
   }, []);
 
+  // 지역 클릭 핸들러 (특정 센서 데이터 로드)
   const handleRegionClick = async (deviceData) => {
     setSelectedRegion(deviceData);
+    
     try {
-      const sensorRes = await axios.get(`http://localhost:8085/api/sensor/${deviceData.deviceId}`);
-      setSelectedSensorData(sensorRes.data?.data || sensorRes.data);
-    } catch (err) {
-      console.error("❌ 센서 데이터 호출 실패:", err);
+      const sensorData = await sensorApi.getSensorDataByDeviceId(deviceData.deviceId);
+      setSelectedSensorData(sensorData);
+    } catch (error) {
+      console.error("❌ 센서 데이터 호출 실패:", error);
+      setSelectedSensorData(null);
     }
   };
 
@@ -72,10 +81,9 @@ function App() {
               <SensorBoxes selectedSensorData={selectedSensorData} />
 
               <div className="dashboard-row" style={{ gap: '30px' }}>
-                {/* --- 여기를 수정했습니다 (지도 너비 조정을 위해 비율 변경) --- */}
                 <div className="left-column" style={{ flex: 0.35 }}>
                   <div style={{ flex: 0.4, display: 'flex' }}>
-                    <AnomalyDetection />
+                    <AnomalyDetection deviceListData={deviceListData} />
                   </div>
                   <div style={{ flex: 0.6, display: 'flex' }}>
                     <PredictionChart
@@ -86,7 +94,6 @@ function App() {
                 </div>
 
                 <div className="map-wrapper" style={{ flex: 0.65 }}>
-                  {/* --- 여기를 수정했습니다 (지도 잘림 문제 해결) --- */}
                   <div className="map-card" style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 className="map-title" style={{ fontSize: '35px', color:"black" }}>🌐 전국 오염 지도</h2>
                     <div className="map-container" style={{ flexGrow: 1 }}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/components.css';
 
 // AnomalyDetection 컴포넌트는 이제 deviceListData를 props로 받습니다.
 function AnomalyDetection({ deviceListData }) {
@@ -32,34 +33,28 @@ function AnomalyDetection({ deviceListData }) {
   };
 
   return (
-    <div style={{
-      backgroundColor: '#ffffff',
-      borderRadius: '10px',
-      padding: '20px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-      flexGrow: 1,
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
-      <h2 style={{ fontSize: '35px', fontWeight: 'bold', marginBottom: '20px', color: '#333' }}>
+    <div className="anomaly-container">
+      <h2 className="anomaly-title">
         이상 감지 상위 지역 (WQI 기준)
       </h2>
       {rankedStations.length > 0 ? (
-        <ul style={{ listStyleType: 'none', padding: 0, margin: 0, flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
+        <ul className="anomaly-list">
           {rankedStations.map((station, index) => (
-            // --- 여기를 수정했습니다 (글자 크기 조정) ---
-            <li key={station.deviceId} style={{ display: 'flex', alignItems: 'center', gap: '15px', fontSize: '1.6em' }}>
-              <span style={{ fontWeight: 'bold', color: '#333', width: '30px' }}>{index + 1}.</span>
-              <span style={{ flex: 1, color: '#475569', fontWeight: '500' }}>{station.name}</span>
-              <span style={{ fontWeight: 'bold', color: getWqiColor(station.wqi), fontSize: '1.1em' }}>
+            <li key={station.deviceId} className="anomaly-item">
+              <span className="anomaly-rank">{index + 1}.</span>
+              <span className="anomaly-name">{station.name}</span>
+              <span 
+                className="anomaly-score" 
+                style={{ color: getWqiColor(station.wqi) }}
+              >
                 {station.wqi}
               </span>
             </li>
           ))}
         </ul>
       ) : (
-        <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <p style={{ color: '#666', fontSize: '1.5em' }}>측정소 데이터를 불러오는 중...</p>
+        <div className="anomaly-loading">
+          <p className="anomaly-loading-text">측정소 데이터를 불러오는 중...</p>
         </div>
       )}
     </div>

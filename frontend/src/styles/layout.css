@@ -1,0 +1,111 @@
+/* src/styles/layout.css */
+
+/* 전체 컨테이너 */
+.app-container {
+    background-color: #1f2937;
+    padding: 20px;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  .app-layout {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* 사이드바 */
+  .sidebar {
+    width: 240px;
+    background-color: #1e293b;
+    color: white;
+    padding: 24px;
+    box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* 메인 콘텐츠 */
+  .main-content {
+    flex-grow: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  
+  /* 상단 센서 카드 줄 */
+  .dashboard-sensor-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* 하단 지도 + 카드 줄 */
+  .dashboard-row {
+    display: flex;
+    gap: 20px;
+    height: calc(100vh - 260px); /* 상단 센서카드 높이 제외한 나머지 */
+    min-height: 400px;
+    align-items: stretch;  
+  }
+  
+  /* 왼쪽 카드 열 */
+  .left-column {
+    flex: 0.45;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+  }
+  
+  /* 지도 wrapper */
+  .map-wrapper {
+    flex: 0.55;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;  
+  }
+  
+  /* 지도 카드 */
+  .map-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* leaflet 지도 */
+  .map-container {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .map-title {
+    font-size: 35px;
+    color: black;
+  }
+  
+  /* 반응형 */
+  @media (max-width: 1024px) {
+    .dashboard-row {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .left-column,
+    .map-wrapper {
+      height: 400px;
+    }
+  }

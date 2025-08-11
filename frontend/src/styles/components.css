@@ -1,0 +1,458 @@
+/* src/styles/components.css */
+
+/* ==================== AnomalyDetection 컴포넌트 ==================== */
+.anomaly-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .anomaly-title {
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .anomaly-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .anomaly-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.6em;
+  }
+  
+  .anomaly-rank {
+    font-weight: bold;
+    color: #333;
+    width: 30px;
+  }
+  
+  .anomaly-name {
+    flex: 1;
+    color: #475569;
+    font-weight: 500;
+  }
+  
+  .anomaly-score {
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  
+  .anomaly-loading {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .anomaly-loading-text {
+    color: #666;
+    font-size: 1.5em;
+  }
+  
+  /* ==================== PredictionChart 컴포넌트 ==================== */
+  .prediction-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .prediction-title {
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .prediction-region {
+    margin-bottom: 10px;
+    color: #475569;
+    font-size: 1.5em;
+  }
+  
+  .prediction-chart-wrapper {
+    flex-grow: 1;
+    position: relative;
+  }
+  
+  .prediction-no-data {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .prediction-no-data-text {
+    color: #666;
+    font-size: 1.5em;
+  }
+  
+  /* ==================== SensorBoxes 컴포넌트 ==================== */
+  .sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+  
+  .sensor-box {
+    border-radius: 12px;
+    padding: 30px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .sensor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .sensor-icon {
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .sensor-name {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #4A5568;
+  }
+  
+  .sensor-value {
+    margin: 8px 0 0 0;
+    font-size: 44px;
+    font-weight: bold;
+    align-self: center;
+  }
+  
+  .sensor-unit {
+    font-size: 20px;
+    margin-left: 6px;
+    color: #4A5568;
+    font-weight: 500;
+  }
+  
+  /* ==================== Sidebar 컴포넌트 ==================== */
+  .sidebar-container {
+    width: 360px;
+    background-color: #1f2937;
+    padding: 30px 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    flex-shrink: 0;
+  }
+  
+  .sidebar-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sidebar-main-title {
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-align: center;
+  }
+  
+  .sidebar-sub-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #e5e7eb;
+    text-align: center;
+  }
+  
+  .sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .sidebar-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  
+  .calendar-section {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .calendar-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  
+  /* ==================== TimeRangePage 컴포넌트 ==================== */
+  .time-range-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    height: 100%;
+    padding: 25px;
+    background: #f0f2f5;
+  }
+  
+  .time-range-filter {
+    background: #fff;
+    padding: 50px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+  
+  .filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    font-size: 22px;
+  }
+  
+  .filter-select {
+    padding: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 22px;
+  }
+  
+  .filter-label {
+    margin-left: 10px;
+  }
+  
+  .filter-input {
+    padding: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 22px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .filter-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .search-button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 5px;
+    background: #6c757d;
+    color: #fff;
+    cursor: pointer;
+    font-size: 22px;
+  }
+  
+  .search-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .data-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .data-title {
+    margin: 0;
+    font-size: 30px;
+  }
+  
+  .download-buttons button {
+    padding: 12px 18px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  .error-message {
+    color: crimson;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+  }
+  
+  .no-data-message {
+    color: #666;
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 22px;
+  }
+  
+  .data-table-wrapper {
+    overflow: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    flex-grow: 1;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table thead {
+    position: sticky;
+    top: 0;
+    background: #fff;
+  }
+  
+  .data-table thead tr {
+    background: #f9fafb;
+  }
+  
+  .table-header {
+    text-align: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 25px;
+  }
+  
+  .table-cell {
+    text-align: center;
+    padding: 16px 20px;
+    white-space: nowrap;
+    font-size: 25px;
+  }
+  
+  .data-table tbody tr {
+    border-top: 1px solid #f1f5f9;
+  }
+  
+  /* ==================== MapDashboard 컴포넌트 ==================== */
+.map-loading-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .map-dashboard-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .custom-cluster-icon {
+    background-color: rgba(44, 62, 80, 0.8);
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  
+  .custom-cluster-icon .cluster-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  }
+  
+  .custom-cluster-icon.small {
+    background-color: rgba(52, 152, 219, 0.8);
+  }
+  
+  .custom-cluster-icon.small .cluster-inner {
+    background-color: rgba(52, 152, 219, 0.9);
+    font-size: 12px;
+  }
+  
+  .custom-cluster-icon.medium {
+    background-color: rgba(230, 126, 34, 0.8);
+  }
+  
+  .custom-cluster-icon.medium .cluster-inner {
+    background-color: rgba(230, 126, 34, 0.9);
+    font-size: 14px;
+  }
+  
+  .custom-cluster-icon.large {
+    background-color: rgba(231, 76, 60, 0.8);
+  }
+  
+  .custom-cluster-icon.large .cluster-inner {
+    background-color: rgba(231, 76, 60, 0.9);
+    font-size: 16px;
+  }

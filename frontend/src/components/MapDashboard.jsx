@@ -1,12 +1,117 @@
 // src/components/MapDashboard.jsx
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import L from 'leaflet';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import 'leaflet.markercluster';
+import "leaflet/dist/leaflet.css";
+import '../styles/components.css';
 
-import { MapContainer, TileLayer, Circle, Popup, useMap } from "react-leaflet";
+// 환경변수에서 지도 설정 가져오기
+const MAP_CENTER_LAT = parseFloat(import.meta.env.VITE_MAP_CENTER_LAT) || 36.6099760003;
+const MAP_CENTER_LNG = parseFloat(import.meta.env.VITE_MAP_CENTER_LNG) || 127.754672;
+const MAP_DEFAULT_ZOOM = parseInt(import.meta.env.VITE_MAP_DEFAULT_ZOOM) || 8;
+const CLUSTER_MAX_RADIUS = parseInt(import.meta.env.VITE_CLUSTER_MAX_RADIUS) || 50;
+const CLUSTER_DISABLE_AT_ZOOM = parseInt(import.meta.env.VITE_CLUSTER_DISABLE_AT_ZOOM) || 15;
+const customIcon = L.icon({
+  iconUrl: '/marker.svg',
+  iconSize: [24, 24],
+  iconAnchor: [12, 24],
+  popupAnchor: [0, -24],
+});
 
-import "leaflet/dist/leaflet.css"; // Leaflet의 기본 CSS
+// 마커 클러스터링을 처리하는 컴포넌트
+function MarkerClusterComponent({ deviceListData, onRegionClick }) {
+  const map = useMap();
+  const clusterGroupRef = useRef(null);
 
-// deviceListData, isDeviceListLoading, deviceListHasError 프롭스 추가
+  useEffect(() => {
+    if (!map || !deviceListData) return;
+
+    // 기존 클러스터 그룹이 있으면 제거
+    if (clusterGroupRef.current) {
+      map.removeLayer(clusterGroupRef.current);
+    }
+
+    // 새로운 마커 클러스터 그룹 생성
+    const markerClusterGroup = L.markerClusterGroup({
+      // 클러스터링 옵션 (환경변수 사용)
+      maxClusterRadius: CLUSTER_MAX_RADIUS, // 클러스터링 반경
+      spiderfyOnMaxZoom: true, // 최대 줌에서 마커들을 펼쳐서 표시
+      showCoverageOnHover: false, // 호버시 클러스터 범위 표시 안함
+      zoomToBoundsOnClick: true, // 클러스터 클릭시 줌인
+      disableClusteringAtZoom: CLUSTER_DISABLE_AT_ZOOM, // 줌 레벨에서 클러스터링 해제
+      
+      // 클러스터 아이콘 커스터마이징
+      iconCreateFunction: function(cluster) {
+        const count = cluster.getChildCount();
+        let className = 'custom-cluster-icon';
+        let size = 'medium';
+        
+        if (count < 10) {
+          className += ' small';
+          size = 'small';
+        } else if (count < 100) {
+          className += ' medium';
+          size = 'medium';
+        } else {
+          className += ' large';
+          size = 'large';
+        }
+
+        return L.divIcon({
+          html: `<div class="cluster-inner"><span>${count}</span></div>`,
+          className: className,
+          iconSize: size === 'small' ? [30, 30] : size === 'medium' ? [40, 40] : [50, 50]
+        });
+      }
+    });
+
+    // 각 디바이스에 대해 마커 생성
+    deviceListData.forEach(device => {
+      const marker = L.marker([device.lat, device.lon], { icon: customIcon });
+      
+      // 팝업 추가
+      marker.bindPopup(`
+        <div>
+          <strong style="font-size: 1.2em">${device.name}</strong> (ID: ${device.deviceId})<br/>
+          <span style="font-size: 1.1em">위도: ${device.lat}</span><br/>
+          <span style="font-size: 1.1em">경도: ${device.lon}</span>
+        </div>
+      `);
+      
+      // 클릭 이벤트 추가
+      marker.on('click', () => {
+        if (onRegionClick) {
+          onRegionClick({
+            deviceId: device.deviceId,
+            name: device.name,
+            lat: device.lat,
+            lng: device.lon,
+          });
+        }
+      });
+
+      // 클러스터 그룹에 마커 추가
+      markerClusterGroup.addLayer(marker);
+    });
+
+    // 지도에 클러스터 그룹 추가
+    map.addLayer(markerClusterGroup);
+    clusterGroupRef.current = markerClusterGroup;
+
+    // 클린업 함수
+    return () => {
+      if (clusterGroupRef.current) {
+        map.removeLayer(clusterGroupRef.current);
+      }
+    };
+  }, [map, deviceListData, onRegionClick]);
+
+  return null;
+}
 
 function MapDashboard({
   onRegionClick,
@@ -16,52 +121,28 @@ function MapDashboard({
 }) {
   function ResizeMap() {
     const map = useMap();
-
     setTimeout(() => {
       map.invalidateSize();
     }, 0);
-
     return null;
-  } // 지도에 표시될 원의 기본 색상
+  }
 
-  const defaultCircleColor = "#3b82f6"; // 파란색 // 로딩 중일 때 표시할 UI
-
+  // 로딩 중일 때 표시할 UI
   if (isDeviceListLoading) {
     return (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          borderRadius: "8px",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "1.2em",
-          color: "#666",
-        }}
-      >
+      <div className="map-loading-container">
         지도 데이터 로딩 중...
       </div>
     );
-  } // 데이터 로딩이 끝난 후 (성공, 실패, 데이터 없음 모두 포함) 항상 지도를 렌더링합니다.
+  }
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        borderRadius: "8px",
-        overflow: "hidden",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-      }}
-    >
-      <MapContainer // 데이터가 성공적으로 로드되면 첫 번째 디바이스 위치로, 아니면 대한민국 중심으로 지도를 엽니다.
-        center={[36.6099760003, 127.754672]}
-        zoom={8}
+    <div className="map-dashboard-container">
+      <MapContainer
+        center={[MAP_CENTER_LAT, MAP_CENTER_LNG]}
+        zoom={MAP_DEFAULT_ZOOM}
         scrollWheelZoom={true}
-        wheelPxPerZoomLevel={120} // 기본값은 60, 클수록 더 많이 스크롤해야 줌됨
+        wheelPxPerZoomLevel={120}
         style={{ height: "100%", width: "100%" }}
       >
         <ResizeMap />
@@ -69,42 +150,14 @@ function MapDashboard({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* deviceListData가 있을 때만 Circle을 렌더링합니다. 
-
-          '옵셔널 체이닝(?.')을 사용하여 deviceListData가 null이나 undefined일 때 에러가 발생하는 것을 방지합니다.
-
-        */}
-        {deviceListData?.map((device, idx) => (
-          <Circle
-            key={idx}
-            radius={1000}
-            center={[device.lat, device.lon]} // lat과 lon 사용
-            pathOptions={{
-              color: defaultCircleColor,
-              fillOpacity: 0.5,
-              weight: 3,
-            }}
-            eventHandlers={{
-              click: () => {
-                if (onRegionClick)
-                  onRegionClick({
-                    deviceId: device.deviceId,
-                    name: device.name,
-                    lat: device.lat,
-                    lng: device.lon,
-                  });
-              },
-            }}
-          >
-            <Popup>
-              <strong style={{ fontSize: '1.2em' }}>{device.name}</strong> (ID: {device.deviceId})
-              <br />
-              <span style={{ fontSize: "1.1em" }}>위도: {device.lat}</span>
-              <br />
-              <span style={{ fontSize: "1.1em" }}>경도: {device.lon}</span>
-            </Popup>
-          </Circle>
-        ))}
+        
+        {/* 마커 클러스터링 컴포넌트 */}
+        {deviceListData && (
+          <MarkerClusterComponent 
+            deviceListData={deviceListData} 
+            onRegionClick={onRegionClick}
+          />
+        )}
       </MapContainer>
     </div>
   );
