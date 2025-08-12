@@ -28,6 +28,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+	// ✅ Apache POI for Excel generation
+    implementation 'org.apache.poi:poi:5.2.4'
+    implementation 'org.apache.poi:poi-ooxml:5.2.4'
+    
+    // ✅ CSV 처리를 위한 추가 라이브러리
+    implementation 'com.opencsv:opencsv:5.9'
+
 	// ✅ .env 자동 
 	implementation 'io.github.cdimascio:java-dotenv:5.2.2'
 
