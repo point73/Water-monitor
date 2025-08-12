@@ -3,7 +3,7 @@
 /* ==================== AnomalyDetection 컴포넌트 ==================== */
 .anomaly-container {
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   flex-grow: 1;
@@ -12,27 +12,28 @@
 }
 
 .anomaly-title {
-  font-size: 35px;
+  font-size: 24px; /* 수정 */
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 9px;
   color: #333;
 }
 
 .anomaly-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  margin-top: 10px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 15px; /* 수정 */
 }
 
 .anomaly-item {
   display: flex;
   align-items: center;
   gap: 15px;
-  font-size: 1.6em;
+  font-size: 1em; /* 수정 */
 }
 
 .anomaly-rank {
@@ -61,14 +62,15 @@
 
 .anomaly-loading-text {
   color: #666;
-  font-size: 1.5em;
+  font-size: 1em; /* 수정 */
 }
 
 /* ==================== PredictionChart 컴포넌트 ==================== */
 .prediction-container {
   background-color: #ffffff;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 20px;
+  padding-top: 0px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   flex-grow: 1;
   display: flex;
@@ -76,16 +78,18 @@
 }
 
 .prediction-title {
-  font-size: 35px;
+  font-size: 24px; /* 수정 */
   font-weight: bold;
   margin-bottom: 15px;
+  margin-top: 9px;
   color: #333;
 }
 
 .prediction-region {
   margin-bottom: 10px;
   color: #475569;
-  font-size: 1.5em;
+  font-size: 1em; /* 수정 */
+  margin-top: 10px;
 }
 
 .prediction-chart-wrapper {
@@ -102,24 +106,24 @@
 
 .prediction-no-data-text {
   color: #666;
-  font-size: 1.5em;
+  font-size: 1em; /* 수정 */
 }
 
 /* ==================== SensorBoxes 컴포넌트 ==================== */
 .sensor-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  gap: 20px; /* 수정 */
 }
 
 .sensor-box {
-  border-radius: 12px;
-  padding: 30px 24px;
+  border-radius: 5px;
+  padding: 20px; /* 수정 */
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px; /* 수정 */
   transition: all 0.3s ease;
 }
 
@@ -132,8 +136,8 @@
 .sensor-icon {
   background-color: #ffffff;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;   /* 수정 */
+  height: 40px;  /* 수정 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,20 +147,20 @@
 
 .sensor-name {
   margin: 0;
-  font-size: 28px;
+  font-size: 22px; /* 수정 */
   font-weight: 600;
   color: #4A5568;
 }
 
 .sensor-value {
-  margin: 8px 0 0 0;
-  font-size: 44px;
+  margin: 4px 0 0 0; /* 수정 */
+  font-size: 32px; /* 수정 */
   font-weight: bold;
   align-self: center;
 }
 
 .sensor-unit {
-  font-size: 20px;
+  font-size: 18px; /* 수정 */
   margin-left: 6px;
   color: #4A5568;
   font-weight: 500;
@@ -164,13 +168,13 @@
 
 /* ==================== Sidebar 컴포넌트 ==================== */
 .sidebar-container {
-  width: 360px;
+  width: 260px; /* 수정 */
   background-color: #1f2937;
-  padding: 30px 20px;
+  padding: 24px 20px; /* 수정 */
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px; /* 수정 */
   flex-shrink: 0;
 }
 
@@ -182,17 +186,17 @@
 }
 
 .sidebar-main-title {
-  font-size: 45px;
+  font-size: 32px; /* 수정 */
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 10px; /* 수정 */
   color: #ffffff;
   text-align: center;
 }
 
 .sidebar-sub-title {
-  font-size: 26px;
+  font-size: 18px; /* 수정 */
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 20px; /* 수정 */
   color: #e5e7eb;
   text-align: center;
 }
@@ -200,17 +204,17 @@
 .sidebar-buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px; /* 수정 */
 }
 
 .sidebar-button {
   background-color: #3b82f6;
   color: white;
-  padding: 14px;
+  padding: 12px; /* 수정 */
   border-radius: 6px;
   border: none;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 18px; /* 수정 */
 }
 
 .calendar-section {
@@ -223,7 +227,7 @@
 }
 
 .calendar-title {
-  font-size: 22px;
+  font-size: 16px; /* 수정 */
   font-weight: bold;
   color: #ffffff;
   margin-top: 5px;
@@ -231,68 +235,69 @@
 }
 
 /* ==================== TimeRangePage 컴포넌트 ==================== */
+/* (기존 코드와 동일, 폰트 및 패딩 위주로 수정) */
 .time-range-container {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px; /* 수정 */
   height: 100%;
-  padding: 25px;
+  padding: 20px; /* 수정 */
   background: #f0f2f5;
 }
 
 .time-range-filter {
   background: #fff;
-  padding: 50px 40px;
+  padding: 24px; /* 수정 */
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 20px; /* 수정 */
 }
 
 .filter-controls {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 15px; /* 수정 */
   flex-wrap: wrap;
-  font-size: 22px;
+  font-size: 15px; /* 수정 */
 }
 
 .filter-select {
-  padding: 14px;
+  padding: 10px; /* 수정 */
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 22px;
+  font-size: 15px; /* 수정 */
 }
 
 .filter-label {
-  margin-left: 10px;
+  margin-left: 8px; /* 수정 */
 }
 
 .filter-input {
-  padding: 14px;
+  padding: 10px; /* 수정 */
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 22px;
+  font-size: 15px; /* 수정 */
   font-family: Arial, sans-serif;
 }
 
 .filter-buttons {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px; /* 수정 */
 }
 
 .search-button {
-  padding: 14px 28px;
+  padding: 10px 20px; /* 수정 */
   border: none;
   border-radius: 5px;
   background: #6c757d;
   color: #fff;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 15px; /* 수정 */
 }
 
 .search-button:disabled {
@@ -303,7 +308,7 @@
 .data-section {
   background: #fff;
   border-radius: 10px;
-  padding: 30px;
+  padding: 24px; /* 수정 */
   box-shadow: 0 2px 5px rgba(0,0,0,.1);
   flex-grow: 1;
   display: flex;
@@ -319,16 +324,16 @@
 
 .data-title {
   margin: 0;
-  font-size: 30px;
+  font-size: 22px; /* 수정 */
 }
 
 .download-buttons button {
-  padding: 12px 18px;
+  padding: 8px 14px; /* 수정 */
   border-radius: 5px;
   border: 1px solid #ccc;
   background: transparent;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 14px; /* 수정 */
   margin-right: 10px;
 }
 
@@ -337,14 +342,14 @@
   margin-bottom: 10px;
   text-align: center;
   padding: 20px;
-  font-size: 22px;
+  font-size: 16px; /* 수정 */
 }
 
 .no-data-message {
   color: #666;
   text-align: center;
   padding: 50px 20px;
-  font-size: 22px;
+  font-size: 16px; /* 수정 */
 }
 
 .data-table-wrapper {
@@ -371,25 +376,27 @@
 
 .table-header {
   text-align: center;
-  padding: 16px 20px;
+  padding: 12px 16px; /* 수정 */
   border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
   font-weight: 600;
-  font-size: 25px;
+  font-size: 16px; /* 수정 */
 }
 
 .table-cell {
   text-align: center;
-  padding: 16px 20px;
+  padding: 12px 16px; /* 수정 */
   white-space: nowrap;
-  font-size: 25px;
+  font-size: 15px; /* 수정 */
 }
 
 .data-table tbody tr {
   border-top: 1px solid #f1f5f9;
 }
 
+
 /* ==================== MapDashboard 컴포넌트 ==================== */
+/* (이 부분은 기존 코드를 유지해도 괜찮습니다) */
 .map-loading-container {
   width: 100%;
   height: 100%;

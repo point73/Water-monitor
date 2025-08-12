@@ -26,7 +26,7 @@ function Sidebar({ date, setDate, setActivePage }) {
             onClick={() => setActivePage('timeRange')} 
             className="sidebar-button"
           >
-            데이터 다운로드
+            자료 조회
           </button>
         </div>
       </div>
