@@ -33,10 +33,9 @@ function AnomalyDetection({ deviceListData }) {
   };
 
   return (
-    // ▼▼▼ 이 부분에 style 속성을 추가하여 상단 여백을 조절했습니다 ▼▼▼
     <div className="anomaly-container" style={{ paddingTop: '1px' }}>
       <h2 className="anomaly-title">
-        이상 감지 상위 지역 (WQI 기준)
+      🚨이상 감지 상위 지역 (WQI 기준)
       </h2>
       {rankedStations.length > 0 ? (
         <ul className="anomaly-list">

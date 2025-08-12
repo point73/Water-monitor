@@ -32,7 +32,7 @@ function Sidebar({ date, setDate, setActivePage }) {
       </div>
       
       <div className="calendar-section">
-        <h3 className="calendar-title">달력</h3>
+        {/* <h3 className="calendar-title"></h3> */}
         <Calendar 
           onChange={setDate} 
           value={date} 

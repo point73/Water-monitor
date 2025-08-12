@@ -96,7 +96,7 @@ function App() {
 
                   <div className="map-wrapper">
                     <div className="map-card">
-                      <h2 className="map-title" style={{ fontSize: '25px' }}>🌐 전국 오염 지도</h2>
+                      <h2 className="map-title" style={{ fontSize: '25px' }}>🗺️ 전국 오염 지도</h2>
                       <div className="map-container">
                         <MapDashboard
                           onRegionClick={handleRegionClick}

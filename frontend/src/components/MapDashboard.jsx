@@ -17,7 +17,7 @@ const CLUSTER_MAX_RADIUS = parseInt(import.meta.env.VITE_CLUSTER_MAX_RADIUS) || 
 const CLUSTER_DISABLE_AT_ZOOM = parseInt(import.meta.env.VITE_CLUSTER_DISABLE_AT_ZOOM) || 15;
 const customIcon = L.icon({
   iconUrl: '/marker.svg',
-  iconSize: [24, 24],
+  iconSize: [48, 48],
   iconAnchor: [12, 24],
   popupAnchor: [0, -24],
 });
@@ -51,7 +51,7 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
         let size = 'medium';
         
         if (count < 10) {
-          className += ' small';
+          className += ' small green-cluster';
           size = 'small';
         } else if (count < 100) {
           className += ' medium';
@@ -162,6 +162,18 @@ function MapDashboard({
           />
         )}
       </MapContainer>
+      
+      {/* 작은 클러스터만 초록색으로 변경하는 CSS */}
+      <style jsx>{`
+        .green-cluster .cluster-inner {
+          background-color: #27ae60 !important;
+          background: #27ae60 !important;
+        }
+        
+        .green-cluster .cluster-inner span {
+          color: white !important;
+        }
+      `}</style>
     </div>
   );
 }
