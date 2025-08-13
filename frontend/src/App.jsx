@@ -45,6 +45,8 @@ function App() {
         setDeviceListHasError(false);
 
         const data = await sensorApi.getAllLatestSensorData();
+        console.log(data);
+        
         setDeviceListData(data);
       } catch (error) {
         console.error("전체 디바이스 목록 API 오류:", error);

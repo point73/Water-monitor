@@ -1,9 +1,8 @@
 // src/api/sensorApi.js
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8085";
-const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT) || 10000;
-
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT);
 // API 인스턴스 생성
 const api = axios.create({
   baseURL: BASE_URL,
