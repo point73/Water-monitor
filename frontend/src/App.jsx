@@ -21,6 +21,7 @@ import SensorBoxes from './components/SensorBoxes';
 import AnomalyDetection from './components/AnomalyDetection';
 import PredictionChart from './components/PredictionChart';
 import TimeRangePage from './components/TimeRangePage';
+import WaterQualityStandards from './components/WaterQualityStandards'; 
 
 // 스타일
 import './styles/layout.css'; // 경로 변경
@@ -83,11 +84,9 @@ function App() {
 
                 <div className="dashboard-row">
                   <div className="left-column">
-                    {/* ▼▼▼ 이 부분에 style 속성을 추가했습니다 (flex: 4) ▼▼▼ */}
                     <div className="anomaly-detection-wrapper" style={{ flex: 4 }}>
                       <AnomalyDetection deviceListData={deviceListData} />
                     </div>
-                    {/* ▼▼▼ 이 부분에 style 속성을 추가했습니다 (flex: 6) ▼▼▼ */}
                     <div className="prediction-chart-wrapper" style={{ flex: 6 }}>
                       <PredictionChart
                         regionName={selectedRegion?.name}
@@ -113,6 +112,8 @@ function App() {
               </>
             )}
             {activePage === 'timeRange' && <TimeRangePage />}
+            {/* ▼▼▼ 이 부분을 새로 추가했습니다 ▼▼▼ */}
+            {activePage === 'qualityStandards' && <WaterQualityStandards />}
           </main>
         </div>
       </div>
