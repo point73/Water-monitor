@@ -17,7 +17,8 @@ function Sidebar({ date, setDate, setActivePage }) {
             대시보드 홈
           </button>
           <button 
-            onClick={() => setActivePage('standards')} 
+            // ▼▼▼ 이 부분의 값을 'qualityStandards'로 수정했습니다. ▼▼▼
+            onClick={() => setActivePage('qualityStandards')} 
             className="sidebar-button"
           >
             수질 환경 기준

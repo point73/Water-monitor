@@ -9,14 +9,14 @@ function AnomalyDetection({ deviceListData }) {
   useEffect(() => {
     // deviceListData가 유효할 때만 로직을 실행합니다.
     if (deviceListData && deviceListData.length > 0) {
-      // 1. 각 측정소에 50 ~ 100 사이의 랜덤 WQI 점수 부여
+      // 1. 각 측정소에 20 ~ 100 사이의 랜덤 WQI 점수 부여 (범위를 넓혀 다양성 확보)
       const stationsWithWqi = deviceListData.map(device => ({
         ...device,
-        wqi: Math.floor(Math.random() * 51) + 50,
+        wqi: Math.floor(Math.random() * 81) + 20,
       }));
 
-      // 2. WQI 점수가 높은 순서대로 내림차순 정렬
-      const sortedStations = stationsWithWqi.sort((a, b) => b.wqi - a.wqi);
+      // 2. WQI 점수가 낮은 순서대로 오름차순 정렬 (낮을수록 오염 심각)
+      const sortedStations = stationsWithWqi.sort((a, b) => a.wqi - b.wqi);
 
       // 3. 상위 5개 지역만 선택
       const topStations = sortedStations.slice(0, 5);
@@ -25,11 +25,11 @@ function AnomalyDetection({ deviceListData }) {
     }
   }, [deviceListData]); // deviceListData가 변경될 때마다 이 효과를 다시 실행합니다.
 
-  // WQI 점수에 따라 색상을 반환하는 함수
+  // WQI 점수에 따라 색상을 반환하는 함수 (낮을수록 위험)
   const getWqiColor = (wqi) => {
-    if (wqi >= 90) return '#F56565'; // 위험 (빨강)
-    if (wqi >= 75) return '#F59E0B'; // 주의 (주황)
-    return '#48BB78'; // 보통 (초록)
+    if (wqi <= 50) return '#F56565'; // 나쁨 (빨강)
+    if (wqi <= 75) return '#F59E0B'; // 보통 (주황)
+    return '#48BB78'; // 좋음 (초록)
   };
 
   return (
