@@ -1,0 +1,87 @@
+server:
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_IP}:${DB_PORT}/${DATABASE}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8
+
+mqtt:
+  broker: ${MQTT_BROKER}
+  topic: ${MQTT_TOPIC}
+
+alert:
+  email:
+    recipient: ${MAIL_USERNAME}
+
+# 기존 설정들 (DB, MQTT, 메일 등)...
+
+# === 🆕 Actuator & Prometheus 설정 추가 ===
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 10s
+    tags:
+      application: water-monitoring-system
+      environment: production
+      version: '@project.version@'
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5, 0.95, 0.99
+      sla:
+        http.server.requests: 10ms, 50ms, 100ms, 200ms, 500ms
+
+# 애플리케이션 정보
+info:
+  app:
+    name: Water Quality Monitoring System
+    description: 실시간 수질 모니터링 및 알림 시스템
+    version: '@project.version@'
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      version: '@java.version@'
+
+# 로깅 레벨 설정 (선택사항)
+logging:
+  level:
+    io.micrometer: DEBUG
+    org.springframework.boot.actuator: DEBUG

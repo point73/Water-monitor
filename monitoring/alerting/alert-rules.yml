@@ -1,0 +1,35 @@
+groups:
+  - name: water-monitoring.rules
+    rules:
+      # Spring Boot 앱 다운 알림
+      - alert: SpringBootAppDown
+        expr: up{job="water-monitoring-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: water-monitoring
+        annotations:
+          summary: "수질 모니터링 백엔드 서비스 다운"
+          description: "Spring Boot 애플리케이션이 응답하지 않습니다."
+
+      # 높은 메모리 사용률
+      - alert: HighMemoryUsage
+        expr: (jvm_memory_used_bytes{job="water-monitoring-backend"} / jvm_memory_max_bytes{job="water-monitoring-backend"}) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          service: water-monitoring
+        annotations:
+          summary: "높은 메모리 사용률"
+          description: "JVM 메모리 사용률이 {{ $value }}%입니다."
+
+      # API 응답 시간 지연
+      - alert: HighResponseTime
+        expr: http_server_requests_seconds{job="water-monitoring-backend",quantile="0.95"} > 5
+        for: 3m
+        labels:
+          severity: warning
+          service: water-monitoring
+        annotations:
+          summary: "API 응답 시간 지연"
+          description: "95th percentile 응답 시간이 {{ $value }}초입니다."

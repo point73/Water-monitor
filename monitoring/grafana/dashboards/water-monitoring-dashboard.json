@@ -1,0 +1,36 @@
+{
+    "dashboard": {
+      "id": null,
+      "title": "Water Quality Monitoring",
+      "tags": ["water-quality", "sensors"],
+      "timezone": "browser",
+      "panels": [
+        {
+          "id": 1,
+          "title": "Sensor Data Count",
+          "type": "stat",
+          "targets": [
+            {
+              "expr": "http_server_requests_seconds_count{job=\"water-monitoring-backend\",uri=\"/api/sensor/latest/all\"}",
+              "legendFormat": "Sensor Requests"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+        },
+        {
+          "id": 2,
+          "title": "API Response Time",
+          "type": "timeseries",
+          "targets": [
+            {
+              "expr": "http_server_requests_seconds{job=\"water-monitoring-backend\",quantile=\"0.95\"}",
+              "legendFormat": "{{method}} {{uri}} (95th)"
+            }
+          ],
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+        }
+      ],
+      "time": {"from": "now-6h", "to": "now"},
+      "refresh": "30s"
+    }
+  }

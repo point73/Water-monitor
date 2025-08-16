@@ -1,0 +1,43 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# 알림 규칙 파일들 (선택사항)
+rule_files:
+  # - "water_monitoring_rules.yml"
+
+# 알림 매니저 설정 (선택사항)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# 메트릭 수집 대상들
+scrape_configs:
+  # Spring Boot 수질 모니터링 애플리케이션
+  - job_name: 'water-monitoring-backend'
+    static_configs:
+      - targets: ['backend:8085']
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+
+  # 프로메테우스 자체 모니터링
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 15s
+
+  # 시스템 메트릭 (Node Exporter)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+
+  # 그라파나 자체 메트릭 (선택사항)
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
