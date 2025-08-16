@@ -1,0 +1,161 @@
+/* 기본 스타일 초기화 및 전체 폰트 설정 */
+body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f2f5;
+  overflow: hidden;
+}
+
+/* 전체 앱 컨테이너 */
+.app-container {
+  background-color: #1f2937;
+  padding: 15px;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 사이드바와 메인 콘텐츠를 감싸는 레이아웃 */
+.app-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 메인 콘텐츠 영역 */
+.main-content {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  background-color: #f3f4f6;
+  flex-direction: column;
+  border-radius: 8px;
+  gap: 10px;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* 하단 대시보드 행 (왼쪽 열 + 지도) */
+.dashboard-row {
+  display: flex;
+  gap: 10px;
+  flex-grow: 1;
+  height: calc(100% - 120px);
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* 왼쪽 열 (이상 감지 + 예측 차트) */
+.left-column {
+  flex: 0.4;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 이상 감지 영역 Wrapper */
+.anomaly-detection-wrapper {
+  flex: 0.05;
+  display: flex;
+  min-height: 0;
+}
+
+/* 예측 차트 영역 Wrapper */
+.prediction-chart-wrapper {
+  flex: 0.95;
+  display: flex;
+  min-height: 0;
+}
+
+/* 지도 영역 */
+.map-wrapper {
+  flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 지도를 감싸는 카드 */
+.map-card {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.map-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 5px 0;
+}
+
+/* 지도 컨테이너 */
+.map-container {
+  flex-grow: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  height: calc(100% - 40px);
+}
+
+/* react-leaflet 지도가 부모 높이를 100% 차지하도록 설정 */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- 개별 컴포넌트 크기 조절을 위한 코드 추가 --- */
+
+/* 사이드바 크기 */
+.sidebar {
+  width: 160px;
+  padding: 13px 7px;
+}
+
+/* 센서 박스 컨테이너 */
+.sensor-boxes-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+/* 이상 감지 카드 내부 */
+.anomaly-detection-card h2 {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.anomaly-detection-card li {
+  font-size: 0.67em;
+  gap: 5px;
+}
+
+/* 예측 차트 카드 내부 */
+.prediction-chart-card h2 {
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.prediction-chart-card p {
+  font-size: 0.67em;
+}

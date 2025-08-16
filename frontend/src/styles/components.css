@@ -1,0 +1,558 @@
+/* src/styles/components.css */
+
+/* ==================== AnomalyDetection 컴포넌트 ==================== */
+.anomaly-container {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* 컨테이너 오버플로우 숨김 */
+}
+
+.anomaly-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  padding-top: 8px; /* 제목 내용이 잘리지 않도록 상단 패딩 추가 */
+  color: #333;
+  white-space: nowrap; /* 제목 줄바꿈 방지 */
+  overflow: hidden; /* 오버플로우 숨김 */
+  text-overflow: ellipsis; /* 말줄임표 표시 */
+}
+
+.anomaly-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px; /* 8px에서 20px로 수정하여 목록을 아래로 내렸습니다. */
+  margin-bottom: 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0px; 
+  overflow: hidden; /* 리스트 오버플로우 숨김 */
+}
+
+.anomaly-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1em;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: #fafafa;
+  transition: background-color 0.2s ease;
+  min-height: 15px; /* 최소 높이 설정 */
+  overflow: hidden; /* 항목 오버플로우 숨김 */
+}
+
+.anomaly-item:hover {
+  background-color: #f0f0f0;
+}
+
+.anomaly-rank {
+  font-weight: bold;
+  color: #333;
+  width: 35px; 
+  text-align: center;
+  flex-shrink: 0; /* 크기 고정 */
+}
+
+.anomaly-name {
+  flex: 1;
+  color: #475569;
+  font-weight: 500;
+  overflow: hidden; /* 텍스트 오버플로우 숨김 */
+  text-overflow: ellipsis; /* 말줄임표 표시 */
+  white-space: nowrap; /* 줄바꿈 방지 */
+  min-width: 0; /* flex 아이템의 최소 너비 설정 */
+}
+
+.anomaly-score {
+  font-weight: bold;
+  font-size: 1.1em;
+  flex-shrink: 0; /* 크기 고정 */
+  width: 45px; /* 고정 너비 */
+  text-align: right; /* 우측 정렬 */
+}
+
+.anomaly-loading {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.anomaly-loading-text {
+  color: #666;
+  font-size: 1em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ==================== PredictionChart 컴포넌트 ==================== */
+.prediction-container {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 20px;
+  padding-top: 0px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.prediction-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  margin-top: 9px;
+  color: #333;
+}
+
+.prediction-region {
+  margin-bottom: 10px;
+  color: #475569;
+  font-size: 1em;
+  margin-top: 10px;
+}
+
+.prediction-chart-wrapper {
+  flex-grow: 1;
+  position: relative;
+}
+
+.prediction-no-data {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prediction-no-data-text {
+  color: #666;
+  font-size: 1em;
+}
+
+/* ==================== SensorBoxes 컴포넌트 ==================== */
+.sensor-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.sensor-box {
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.sensor-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sensor-icon {
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sensor-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #4A5568;
+}
+
+.sensor-value {
+  margin: 4px 0 0 0;
+  font-size: 32px;
+  font-weight: bold;
+  align-self: center;
+}
+
+.sensor-unit {
+  font-size: 18px;
+  margin-left: 6px;
+  color: #4A5568;
+  font-weight: 500;
+}
+
+/* ==================== Sidebar 컴포넌트 ==================== */
+.sidebar-container {
+  width: 250px;
+  background-color: #1f2937;
+  padding: 15px 15px;
+  padding-bottom: 0px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.sidebar-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar-main-title {
+  font-size: 58px;
+  font-weight: bold;
+  font-family: 'Exo 2', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  font-weight: 700;
+  margin-top: 0px;
+  margin-bottom: 1px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.sidebar-sub-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #e5e7eb;
+  text-align: center;
+}
+
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.calendar-section {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.calendar-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* ==================== TimeRangePage 컴포넌트 ==================== */
+.time-range-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  /* padding: 20px; */
+  background: #f0f2f5;
+}
+
+.time-range-filter {
+  background: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  font-size: 15px;
+}
+
+.filter-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.filter-label {
+  margin-left: 8px;
+}
+
+.filter-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.filter-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #6c757d;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.search-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.data-section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.data-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.data-title {
+  margin: 0;
+  font-size: 22px;
+}
+
+.download-buttons button {
+  padding: 8px 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.error-message {
+  color: crimson;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.no-data-message {
+  color: #666;
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 16px;
+}
+
+.data-table-wrapper {
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  flex-grow: 1;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table thead {
+  position: sticky;
+  top: 0;
+  background: #fff;
+}
+
+.data-table thead tr {
+  background: #f9fafb;
+}
+
+.table-header {
+  text-align: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.table-cell {
+  text-align: center;
+  padding: 12px 16px;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.data-table tbody tr {
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ==================== MapDashboard 컴포넌트 ==================== */
+.map-loading-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.map-dashboard-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 지도 그리드 선 제거 */
+.custom-map-container .leaflet-container {
+  background-color: #a8c2e8 !important;
+}
+
+.custom-map-container .leaflet-tile {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.custom-map-container .leaflet-tile-container {
+  border: none !important;
+}
+
+/* 지도 타일 사이의 선 제거 */
+.custom-map-container .leaflet-layer,
+.custom-map-container .leaflet-control-zoom-in,
+.custom-map-container .leaflet-control-zoom-out {
+  border: none !important;
+}
+
+/* 추가 그리드 선 제거 */
+.custom-map-container .leaflet-tile-pane {
+  border: none !important;
+}
+
+.custom-map-container .leaflet-map-pane {
+  border: none !important;
+}
+
+/* 타일 로딩시 테두리 제거 */
+.custom-map-container .leaflet-tile-loaded {
+  border: none !important;
+}
+
+.custom-cluster-icon {
+  background-color: rgba(44, 62, 80, 0.8);
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.custom-cluster-icon .cluster-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.custom-cluster-icon.small {
+  background-color: rgba(52, 152, 219, 0.8);
+}
+
+.custom-cluster-icon.small .cluster-inner {
+  background-color: rgba(52, 152, 219, 0.9);
+  font-size: 12px;
+}
+
+.custom-cluster-icon.medium {
+  background-color: rgba(230, 126, 34, 0.8);
+}
+
+.custom-cluster-icon.medium .cluster-inner {
+  background-color: rgba(230, 126, 34, 0.9);
+  font-size: 14px;
+}
+
+.custom-cluster-icon.large {
+  background-color: rgba(231, 76, 60, 0.8);
+}
+
+.custom-cluster-icon.large .cluster-inner {
+  background-color: rgba(231, 76, 60, 0.9);
+  font-size: 16px;
+}
+
+/* 작은 클러스터만 초록색으로 변경 */
+.green-cluster .cluster-inner {
+  background-color: #27ae60 !important;
+  background: #27ae60 !important;
+}
+
+.green-cluster .cluster-inner span {
+  color: white !important;
+}
+
+/* 전체 컨테이너들 overflow 숨김 */
+.app-container, 
+.main-container,
+.dashboard-container,
+.map-dashboard-container {
+  overflow: hidden !important;
+}
