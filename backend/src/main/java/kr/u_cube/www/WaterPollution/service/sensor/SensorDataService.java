@@ -15,6 +15,7 @@ import kr.u_cube.www.WaterPollution.entity.SensorData;
 import kr.u_cube.www.WaterPollution.entity.SensorInfo;
 import kr.u_cube.www.WaterPollution.repository.SensorDataRepository;
 import kr.u_cube.www.WaterPollution.repository.SensorInfoRepository;
+import kr.u_cube.www.WaterPollution.service.monitoring.CustomMetricsService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class SensorDataService {
         private final SensorDataRepository sensorDataRepository;
         private final SensorInfoRepository sensorInfoRepository;
+        private final CustomMetricsService customMetricsService;
 
         public void save(SensorDataDto dto) {
                 SensorInfo sensorInfo = sensorInfoRepository.findByDeviceId(dto.getDeviceId())
@@ -56,6 +58,9 @@ public class SensorDataService {
                                 .build();
 
                 sensorDataRepository.save(entity);
+
+                // 🆕 메트릭 증가
+                customMetricsService.incrementSensorDataReceived();
         }
 
         public List<SensorInfoDto> getLatestSensorInfoPerDevice() {
@@ -105,7 +110,7 @@ public class SensorDataService {
         }
 
         public List<HistoryDataDto> getHistory(LocalDateTime start, LocalDateTime end) {
-        return sensorDataRepository.findHistoryDataByTimestampBetween(start, end);
-    }
+                return sensorDataRepository.findHistoryDataByTimestampBetween(start, end);
+        }
 
 }

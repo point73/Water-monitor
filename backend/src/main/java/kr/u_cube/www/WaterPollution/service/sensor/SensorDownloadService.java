@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.opencsv.CSVWriter;
 
 import kr.u_cube.www.WaterPollution.dto.HistoryDataDto;
+import kr.u_cube.www.WaterPollution.service.monitoring.CustomMetricsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SensorDownloadService {
 
     private final SensorDataService sensorDataService;
+    private final CustomMetricsService customMetricsService; // 🆕 추가
 
     /**
      * 지정된 기간의 센서 데이터를 CSV 형태로 생성
@@ -41,6 +43,9 @@ public class SensorDownloadService {
         
         // CSV 생성
         byte[] csvBytes = createCSVBytes(historyData);
+
+        // 🆕 메트릭 증가
+        customMetricsService.incrementCsvDownload();
         
         log.info("✅ CSV 데이터 생성 완료: {} rows, {} bytes", historyData.size(), csvBytes.length);
         return csvBytes;
@@ -62,6 +67,9 @@ public class SensorDownloadService {
         
         // Excel 생성
         byte[] excelBytes = createExcelBytes(historyData);
+
+        // 🆕 메트릭 증가
+        customMetricsService.incrementExcelDownload();
         
         log.info("✅ Excel 데이터 생성 완료: {} rows, {} bytes", historyData.size(), excelBytes.length);
         return excelBytes;

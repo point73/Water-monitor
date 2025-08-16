@@ -28,6 +28,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
+	// ✅ Actuator와 Prometheus 메트릭 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
 	// ✅ Apache POI for Excel generation
     implementation 'org.apache.poi:poi:5.2.4'
     implementation 'org.apache.poi:poi-ooxml:5.2.4'

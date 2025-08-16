@@ -22,7 +22,7 @@ public class SensorInfoService {
     private final SensorInfoRepository sensorInfoRepository;
     
     /**
-     * ¸ğµç ¼¾¼­ Á¤º¸ Á¶È¸
+     * ëª¨ë“  ì„¼ì„œ ì •ë³´ ì¡°íšŒ
      */
     public List<SensorInfoDto> getAllSensors() {
         return sensorInfoRepository.findAll().stream()
@@ -31,7 +31,7 @@ public class SensorInfoService {
     }
     
     /**
-     * Æ¯Á¤ ¼¾¼­ Á¤º¸ Á¶È¸
+     * íŠ¹ì • ì„¼ì„œ ì •ë³´ ì¡°íšŒ
      */
     public Optional<SensorInfoDto> getSensorByDeviceId(String deviceId) {
         return sensorInfoRepository.findByDeviceId(deviceId)
@@ -39,13 +39,13 @@ public class SensorInfoService {
     }
     
     /**
-     * ¼¾¼­ Á¤º¸ ¾÷µ¥ÀÌÆ® (ºÎºĞ ¾÷µ¥ÀÌÆ® Áö¿ø)
+     * ì„¼ì„œ ì •ë³´ ì—…ë°ì´íŠ¸ (ë¶€ë¶„ ì—…ë°ì´íŠ¸ ì§€ì›)
      */
     public SensorInfoDto updateSensorInfo(String deviceId, SensorInfoUpdateDto updateDto) {
         SensorInfo sensorInfo = sensorInfoRepository.findByDeviceId(deviceId)
-                .orElseThrow(() -> new RuntimeException("¼¾¼­¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù: " + deviceId));
+                .orElseThrow(() -> new RuntimeException("ì„¼ì„œë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: " + deviceId));
         
-        // nullÀÌ ¾Æ´Ñ ÇÊµå¸¸ ¾÷µ¥ÀÌÆ® (ºÎºĞ ¾÷µ¥ÀÌÆ®)
+        // nullì´ ì•„ë‹Œ í•„ë“œë§Œ ì—…ë°ì´íŠ¸ (ë¶€ë¶„ ì—…ë°ì´íŠ¸)
         if (updateDto.getName() != null) {
             sensorInfo.setName(updateDto.getName());
         }
@@ -67,18 +67,18 @@ public class SensorInfoService {
         
         SensorInfo updatedSensor = sensorInfoRepository.save(sensorInfo);
         
-        log.info("? ¼¾¼­ Á¤º¸ ¾÷µ¥ÀÌÆ® ¿Ï·á: {} -> {}", deviceId, updateDto);
+        log.info("âœ… ì„¼ì„œ ì •ë³´ ì—…ë°ì´íŠ¸ ì™„ë£Œ: {} -> {}", deviceId, updateDto);
         
         return convertToDto(updatedSensor);
     }
     
     /**
-     * ±âº»°ªÀ¸·Î ¼³Á¤µÈ ¼¾¼­µé Á¶È¸ (¾÷µ¥ÀÌÆ® ÇÊ¿äÇÑ ¼¾¼­µé)
+     * ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •ëœ ì„¼ì„œë“¤ ì¡°íšŒ (ì—…ë°ì´íŠ¸ í•„ìš”í•œ ì„¼ì„œë“¤)
      */
     public List<SensorInfoDto> getSensorsNeedingUpdate() {
         List<SensorInfo> sensorsNeedingUpdate = sensorInfoRepository.findAll().stream()
                 .filter(sensor -> 
-                    "¼¾¼­ ÀÌ¸§ ¾øÀ½".equals(sensor.getName()) || 
+                    "ì„¼ì„œ ì´ë¦„ ì—†ìŒ".equals(sensor.getName()) || 
                     "unknown".equals(sensor.getLocation()) ||
                     sensor.getLat() == 0.0 || 
                     sensor.getLon() == 0.0
@@ -91,20 +91,20 @@ public class SensorInfoService {
     }
     
     /**
-     * ¼¾¼­ Á¤º¸ »èÁ¦
+     * ì„¼ì„œ ì •ë³´ ì‚­ì œ
      */
     public boolean deleteSensorInfo(String deviceId) {
         Optional<SensorInfo> sensorInfo = sensorInfoRepository.findByDeviceId(deviceId);
         if (sensorInfo.isPresent()) {
             sensorInfoRepository.delete(sensorInfo.get());
-            log.info("?? ¼¾¼­ Á¤º¸ »èÁ¦ ¿Ï·á: {}", deviceId);
+            log.info("ğŸ—‘ï¸ ì„¼ì„œ ì •ë³´ ì‚­ì œ ì™„ë£Œ: {}", deviceId);
             return true;
         }
         return false;
     }
     
     /**
-     * ¼¾¼­ Åë°è Á¤º¸
+     * ì„¼ì„œ í†µê³„ ì •ë³´
      */
     public Map<String, Object> getSensorStatistics() {
         List<SensorInfo> allSensors = sensorInfoRepository.findAll();
@@ -112,7 +112,7 @@ public class SensorInfoService {
         long totalSensors = allSensors.size();
         long configuredSensors = allSensors.stream()
                 .filter(sensor -> 
-                    !"¼¾¼­ ÀÌ¸§ ¾øÀ½".equals(sensor.getName()) && 
+                    !"ì„¼ì„œ ì´ë¦„ ì—†ìŒ".equals(sensor.getName()) && 
                     !"unknown".equals(sensor.getLocation()) &&
                     sensor.getLat() != 0.0 && 
                     sensor.getLon() != 0.0
@@ -130,7 +130,7 @@ public class SensorInfoService {
     }
     
     /**
-     * SensorInfo¸¦ SensorInfoDto·Î º¯È¯
+     * SensorInfoë¥¼ SensorInfoDtoë¡œ ë³€í™˜
      */
     private SensorInfoDto convertToDto(SensorInfo sensorInfo) {
         return new SensorInfoDto(
