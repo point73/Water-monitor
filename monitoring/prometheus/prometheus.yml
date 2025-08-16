@@ -4,14 +4,14 @@ global:
 
 # 알림 규칙 파일들 (선택사항)
 rule_files:
-  # - "water_monitoring_rules.yml"
+  - "water_monitoring_rules.yml"
 
 # 알림 매니저 설정 (선택사항)
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          # - alertmanager:9093
+          - alertmanager:9093
 
 # 메트릭 수집 대상들
 scrape_configs:
