@@ -1,6 +1,6 @@
 // src/components/WaterQualityStandards.jsx
 import React from 'react';
-import '../styles/WaterQualityStandards.css'; // 이 CSS 파일을 아래에서 생성합니다.
+import '../styles/components.css';
 
 // 하천 생활환경기준 데이터
 const riverStandardsData = [

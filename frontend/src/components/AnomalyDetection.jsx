@@ -19,7 +19,7 @@ function AnomalyDetection({ deviceListData }) {
       const sortedStations = stationsWithWqi.sort((a, b) => a.wqi - b.wqi);
 
       // 3. 상위 5개 지역만 선택
-      const topStations = sortedStations.slice(0, 5);
+      const topStations = sortedStations.slice(0, 3);
 
       setRankedStations(topStations);
     }

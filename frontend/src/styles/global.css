@@ -331,7 +331,7 @@ button:focus-visible {
 
 /* 사이드바 캘린더 선택된 날짜 */
 .calendar-section .react-calendar__tile--active {
-  background: #4CAF50 !important;
+  background: #84c2de !important;
   color: white !important;
   box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3) !important;
 }

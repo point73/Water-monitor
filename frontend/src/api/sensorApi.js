@@ -96,7 +96,9 @@ export const sensorApi = {
       const startDateTime = `${startDate}T00:00:00`;
       const endDateTime = `${endDate}T23:59:59`;
       
-      const csvUrl = `${BASE_URL}/api/sensor/download/csv?startDate=${encodeURIComponent(startDateTime)}&endDate=${encodeURIComponent(endDateTime)}`;
+      const csvUrl = `${BASE_URL}/api/sensor/download/csv?startDate=${startDateTime}&endDate=${endDateTime}`;
+      console.log(csvUrl);
+      
       
       console.log('📥 CSV 다운로드 URL:', csvUrl);
       
