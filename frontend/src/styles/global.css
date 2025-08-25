@@ -103,7 +103,7 @@ button:focus-visible {
   height: auto !important;
   min-height: 260px !important;
   border: none !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   padding: 0 !important;
   background-color: white !important;
   font-size: 11px !important;
