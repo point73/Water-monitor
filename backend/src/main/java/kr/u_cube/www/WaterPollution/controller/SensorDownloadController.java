@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/sensor/download")
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin(origins = "*", exposedHeaders = {"Content-Disposition", "Content-Type", "Content-Length"})
 public class SensorDownloadController {
 
     private final SensorDownloadService sensorDownloadService;
@@ -49,11 +50,14 @@ public class SensorDownloadController {
                     
         } catch (IllegalStateException e) {
             log.warn("⚠️ CSV 다운로드 - 데이터 없음: {}", e.getMessage());
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.noContent()
+                    .header("X-Error-Message", e.getMessage())
+                    .build();
             
         } catch (Exception e) {
             log.error("❌ CSV 다운로드 실패", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("X-Error-Message", "CSV 생성 중 오류가 발생했습니다: " + e.getMessage())
                     .body(createErrorMessage("CSV 생성 중 오류가 발생했습니다: " + e.getMessage()));
         }
     }
@@ -87,11 +91,14 @@ public class SensorDownloadController {
                     
         } catch (IllegalStateException e) {
             log.warn("⚠️ Excel 다운로드 - 데이터 없음: {}", e.getMessage());
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.noContent()
+                    .header("X-Error-Message", e.getMessage())
+                    .build();
             
         } catch (Exception e) {
             log.error("❌ Excel 다운로드 실패", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("X-Error-Message", "Excel 생성 중 오류가 발생했습니다: " + e.getMessage())
                     .body(createErrorMessage("Excel 생성 중 오류가 발생했습니다: " + e.getMessage()));
         }
     }
@@ -134,6 +141,10 @@ public class SensorDownloadController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(contentType));
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"");
+        headers.set(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Content-Disposition, Content-Type, Content-Length");
+        headers.set(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+        headers.set(HttpHeaders.PRAGMA, "no-cache");
+        headers.set(HttpHeaders.EXPIRES, "0");
         return headers;
     }
 
