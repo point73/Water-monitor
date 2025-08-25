@@ -28,7 +28,7 @@ function WaterQualityStandards() {
       <div className="standards-section">
         <div className="standards-header">
             <h3>하천의 생활환경기준</h3>
-            <span>※ 환경정책기본법 시행령 [별표 1] 제2호 관련</span>
+            
         </div>
         <table className="standards-table">
           <thead>
@@ -94,7 +94,7 @@ function WaterQualityStandards() {
                             <th>WQI 점수</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> 
                         {wqiScoreData.map((item, index) => (
                             <tr key={index}>
                                 <td>{item.grade}</td>

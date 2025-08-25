@@ -2,13 +2,25 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../styles/components.css';
+import logo from '../assets/logo.png'; // 로고 이미지를 import 합니다.
 
 function Sidebar({ date, setDate, setActivePage }) {
   return (
     <aside className="sidebar-container">
       <div className="sidebar-content">
-        <h2 className="sidebar-main-title">WATER</h2>
-        <h1 className="sidebar-sub-title">PPAP 프로젝트</h1>
+        {/* 이미지 크기를 늘리고 가운데 정렬하도록 style 속성을 수정했습니다. */}
+        <img 
+          src={logo} 
+          alt="PPAP Logo" 
+          className="sidebar-logo" 
+          style={{ 
+            width: '180px', 
+            display: 'block', 
+            margin: '10px auto 20px' 
+          }} 
+        />
+
+        
         <div className="sidebar-buttons">
           <button 
             onClick={() => setActivePage('dashboard')} 
@@ -17,7 +29,6 @@ function Sidebar({ date, setDate, setActivePage }) {
             대시보드 홈
           </button>
           <button 
-            // ▼▼▼ 이 부분의 값을 'qualityStandards'로 수정했습니다. ▼▼▼
             onClick={() => setActivePage('qualityStandards')} 
             className="sidebar-button"
           >
@@ -33,7 +44,6 @@ function Sidebar({ date, setDate, setActivePage }) {
       </div>
       
       <div className="calendar-section">
-        {/* <h3 className="calendar-title"></h3> */}
         <Calendar 
           onChange={setDate} 
           value={date} 
