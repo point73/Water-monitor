@@ -73,7 +73,7 @@ function PredictionChart({ regionName }) { // props 이름 수정 및 단순화
 
   return (
     <div className="prediction-container">
-      <h2 className="prediction-title">📈 선택된 지역의 예측 오염도</h2>
+      <h2 className="prediction-title"> 선택된 지역의 예측 오염도</h2>
       {regionName ? (
         <>
           <p className="prediction-region"><strong>{regionName}</strong></p>

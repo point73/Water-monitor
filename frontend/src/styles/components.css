@@ -9,31 +9,27 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* 컨테이너 오버플로우 숨김 */
+  overflow: hidden;
 }
 
 .anomaly-title {
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  padding-top: 8px; /* 제목 내용이 잘리지 않도록 상단 패딩 추가 */
+  margin: 0;
+  padding-top: 8px;
   color: #333;
-  white-space: nowrap; /* 제목 줄바꿈 방지 */
-  overflow: hidden; /* 오버플로우 숨김 */
-  text-overflow: ellipsis; /* 말줄임표 표시 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .anomaly-list {
   list-style-type: none;
   padding: 0;
-  margin-top: 20px; /* 8px에서 20px로 수정하여 목록을 아래로 내렸습니다. */
-  margin-bottom: 10px;
+  margin: 20px 0 10px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 0px; 
-  overflow: hidden; /* 리스트 오버플로우 숨김 */
 }
 
 .anomaly-item {
@@ -45,56 +41,75 @@
   border-radius: 6px;
   background-color: #fafafa;
   transition: background-color 0.2s ease;
-  min-height: 15px; /* 최소 높이 설정 */
-  overflow: hidden; /* 항목 오버플로우 숨김 */
+  min-height: 15px;
 }
 
 .anomaly-item:hover {
   background-color: #f0f0f0;
 }
 
+.anomaly-rank,
+.anomaly-name,
+.anomaly-score {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+
 .anomaly-rank {
   font-weight: bold;
   color: #333;
-  width: 35px; 
+  width: 35px;
   text-align: center;
-  flex-shrink: 0; /* 크기 고정 */
+  flex-shrink: 0;
 }
 
 .anomaly-name {
   flex: 1;
   color: #475569;
   font-weight: 500;
-  overflow: hidden; /* 텍스트 오버플로우 숨김 */
-  text-overflow: ellipsis; /* 말줄임표 표시 */
-  white-space: nowrap; /* 줄바꿈 방지 */
-  min-width: 0; /* flex 아이템의 최소 너비 설정 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .anomaly-score {
   font-weight: bold;
   font-size: 1.1em;
-  flex-shrink: 0; /* 크기 고정 */
-  width: 45px; /* 고정 너비 */
-  text-align: right; /* 우측 정렬 */
+  flex-shrink: 0;
+  width: 45px;
+  text-align: right;
 }
 
-.anomaly-loading {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@keyframes danger-once {
+  0%   { background-color: #f7e9ea; box-shadow: inset 0 0 0 1px #f0c9cb; }
+  20%  { background-color: #ffffff; box-shadow: inset 0 0 0 0 transparent; }
+  40%  { background-color: #f7e9ea; box-shadow: inset 0 0 0 1px #f0c9cb; }
+  60%  { background-color: #ffffff; box-shadow: inset 0 0 0 0 transparent; }
+  80%  { background-color: #f7e9ea; box-shadow: inset 0 0 0 1px #f0c9cb; }
+  100% { background-color: transparent; box-shadow: none; }
 }
 
-.anomaly-loading-text {
-  color: #666;
-  font-size: 1em;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.anomaly-item.blink-danger {
+  animation: danger-once 5s ease-in-out 1 forwards;
+  border-radius: 6px;
+  will-change: background-color, box-shadow;
 }
 
+.anomaly-item.blink-danger:hover {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anomaly-item.blink-danger {
+    animation: none;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
 
 /* ==================== PredictionChart 컴포넌트 ==================== */
 .prediction-container {
@@ -185,7 +200,7 @@
 
 .sensor-value {
   margin: 4px 0 0 0;
-  font-size: 32px;
+  font-size: 42px;
   font-weight: bold;
   align-self: center;
 }
@@ -263,17 +278,20 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 8px;
   flex-shrink: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.calendar-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffffff;
-  margin-top: 5px;
-  margin-bottom: 10px;
+.calendar-section .react-calendar {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box;
+  border-radius: 6px;
 }
 
 /* ==================== TimeRangePage 컴포넌트 ==================== */
@@ -282,7 +300,6 @@
   flex-direction: column;
   gap: 20px;
   height: 100%;
-  /* padding: 20px; */
   background: #f0f2f5;
 }
 
@@ -354,6 +371,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .data-header {
@@ -400,6 +418,20 @@
   flex-grow: 1;
 }
 
+/* === ⬇⬇ 추가: 많은 컬럼용 가로 스크롤 전용 클래스 & 넓은 테이블 최소폭 ⬇⬇ === */
+.data-table-wrapper.horizontal-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch; /* 모바일 관성 스크롤 */
+}
+
+.data-table.wide-table {
+  min-width: 1500px; /* 컬럼 추가 시 폭 확보 (필요하면 1600~1800px로 조정) */
+  border-collapse: collapse;
+}
+/* === ⬆⬆ 추가 끝 ⬆⬆ === */
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -409,6 +441,7 @@
   position: sticky;
   top: 0;
   background: #fff;
+  z-index: 1;
 }
 
 .data-table thead tr {
@@ -436,6 +469,43 @@
 }
 
 /* ==================== MapDashboard 컴포넌트 ==================== */
+
+/* 개별 마커 툴팁 스타일 */
+.custom-marker-tooltip {
+  background-color: #ffffff;
+  border: 1px solid #999;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  padding: 5px 10px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* 클러스터 툴팁 스타일 */
+.custom-cluster-tooltip {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 8px 12px;
+  font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+.cluster-tooltip-content strong {
+  font-size: 14px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.cluster-tooltip-content div {
+  color: #555;
+  line-height: 1.5;
+}
+
 .map-loading-container {
   width: 100%;
   height: 100%;
@@ -456,7 +526,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 지도 그리드 선 제거 */
 .custom-map-container .leaflet-container {
   background-color: #a8c2e8 !important;
 }
@@ -465,31 +534,6 @@
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-}
-
-.custom-map-container .leaflet-tile-container {
-  border: none !important;
-}
-
-/* 지도 타일 사이의 선 제거 */
-.custom-map-container .leaflet-layer,
-.custom-map-container .leaflet-control-zoom-in,
-.custom-map-container .leaflet-control-zoom-out {
-  border: none !important;
-}
-
-/* 추가 그리드 선 제거 */
-.custom-map-container .leaflet-tile-pane {
-  border: none !important;
-}
-
-.custom-map-container .leaflet-map-pane {
-  border: none !important;
-}
-
-/* 타일 로딩시 테두리 제거 */
-.custom-map-container .leaflet-tile-loaded {
-  border: none !important;
 }
 
 .custom-cluster-icon {
@@ -512,17 +556,9 @@
   font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.custom-cluster-icon.small {
-  background-color: rgba(52, 152, 219, 0.8);
-}
-
 .custom-cluster-icon.small .cluster-inner {
   background-color: rgba(52, 152, 219, 0.9);
   font-size: 12px;
-}
-
-.custom-cluster-icon.medium {
-  background-color: rgba(230, 126, 34, 0.8);
 }
 
 .custom-cluster-icon.medium .cluster-inner {
@@ -530,29 +566,360 @@
   font-size: 14px;
 }
 
-.custom-cluster-icon.large {
-  background-color: rgba(231, 76, 60, 0.8);
-}
-
 .custom-cluster-icon.large .cluster-inner {
   background-color: rgba(231, 76, 60, 0.9);
   font-size: 16px;
 }
 
-/* 작은 클러스터만 초록색으로 변경 */
 .green-cluster .cluster-inner {
   background-color: #27ae60 !important;
-  background: #27ae60 !important;
 }
 
-.green-cluster .cluster-inner span {
-  color: white !important;
+/* ==================== WaterQualityStandards 컴포넌트 ==================== */
+.standards-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  height: 100%;
+  overflow-y: auto;
+  font-size: 16px;
 }
 
-/* 전체 컨테이너들 overflow 숨김 */
-.app-container, 
-.main-container,
-.dashboard-container,
-.map-dashboard-container {
-  overflow: hidden !important;
+.standards-section {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 25px 30px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-size: 16px; 
+}
+
+.standards-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.standards-header h3 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.standards-header span {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.standards-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: center;
+}
+
+.standards-table th,
+.standards-table td {
+  border: 1px solid #e2e8f0;
+  padding: 10px 8px;
+  vertical-align: middle;
+}
+
+.standards-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  font-size: 15px;
+}
+
+.standards-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.standards-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.wqi-content {
+  display: flex;
+  gap: 40px;
+}
+
+.wqi-weights {
+  flex: 1;
+}
+
+.wqi-weights h4 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #334155;
+}
+
+.wqi-weights ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wqi-weights li {
+  font-size: 17px;
+  color: #475569;
+}
+
+.wqi-scores {
+  flex: 1.5;
+}
+
+.wqi-scores h4 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #334155;
+}
+
+.wqi-score-table td:first-child {
+  font-weight: 600;
+}
+
+/* ==================== Alarm Panel 컴포넌트 ==================== */
+
+/* 사이드바의 알람 버튼 */
+.sidebar-button.alarm-button {
+  background-color: #e11d48; /* 눈에 띄는 색상 */
+  margin-top: 10px;
+}
+.sidebar-button.alarm-button:hover {
+  background-color: #be123c;
+}
+
+/* 알람 패널 컨테이너 */
+.alarm-panel-container {
+  width: 300px;
+  background-color: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100vh; /* 화면 전체 높이 */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+  animation: slideIn 0.3s ease-out; /* 슬라이드 인 애니메이션 */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 사이드바의 알람 버튼 */
+.sidebar-button.alarm-button {
+  background-color: #e11d48;
+  margin-top: 10px;
+}
+.sidebar-button.alarm-button:hover {
+  background-color: #be123c;
+}
+
+/* 알람 패널 컨테이너 (덮어쓰기 형식으로 수정) */
+.alarm-panel-container {
+  position: absolute; /* 다른 콘텐츠 위에 뜨도록 설정 */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* 다른 요소들보다 위에 보이도록 z-index 설정 */
+
+  width: 300px;
+  height: 100vh;
+  background-color: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+  animation: slideIn 0.3s ease-out;
+  border-radius: 8px; /* 모든 모서리 둥글게 */
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* 사이드바의 알람 버튼 (강화 스타일) */
+.sidebar-button.alarm-button {
+  position: relative;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  margin-top: 12px;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-button.alarm-button:hover {
+  background: linear-gradient(135deg, #f87171, #ef4444);
+  transform: scale(1.03);
+}
+
+
+
+/* 알람 패널 컨테이너 (사이드바 안쪽에서 열릴 때 위치 보정) */
+.alarm-panel-container {
+  position: absolute;
+  top: 0;
+  left: 250px; /* 사이드바 너비 */
+  height: 100%;
+  width: 300px;
+
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.08);
+
+  border-radius: 0 12px 12px 0; /* 오른쪽만 둥글게 */
+  overflow: hidden;
+
+  animation: revealIn 0.35s ease-out;
+  z-index: 1000;
+}
+
+/* 사이드바를 가리지 않는 애니메이션 */
+@keyframes revealIn {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* 알람 패널 헤더 */
+.alarm-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  background-color: #f8fafc;
+}
+
+.alarm-panel-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.alarm-panel-close-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 0 6px;
+  line-height: 1;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+.alarm-panel-close-btn:hover {
+  color: #1e293b;
+  background: #e2e8f0;
+}
+
+/* 알람 패널 콘텐츠 영역 */
+.alarm-panel-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #f9fafb;
+}
+
+.alarm-section {
+  margin-bottom: 24px;
+}
+
+.alarm-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.alarm-section-title.danger { color: #dc2626; }
+.alarm-section-title.warning { color: #d97706; }
+
+.alarm-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alarm-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.alarm-item.danger {
+  background-color: #fee2e2;
+  border-left: 4px solid #ef4444;
+}
+.alarm-item.warning {
+  background-color: #fef3c7;
+  border-left: 4px solid #f59e0b;
+}
+
+.alarm-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.alarm-item-name {
+  font-weight: 500;
+  color: #334155;
+}
+.alarm-item-value {
+  font-weight: 700;
+  font-size: 16px;
+}
+.alarm-item.danger .alarm-item-value { color: #b91c1c; }
+.alarm-item.warning .alarm-item-value { color: #b45309; }
+
+.alarm-item-empty {
+  color: #94a3b8;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: center;
 }

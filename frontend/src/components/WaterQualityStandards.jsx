@@ -1,6 +1,6 @@
 // src/components/WaterQualityStandards.jsx
 import React from 'react';
-import '../styles/WaterQualityStandards.css'; // 이 CSS 파일을 아래에서 생성합니다.
+import '../styles/components.css';
 
 // 하천 생활환경기준 데이터
 const riverStandardsData = [
@@ -28,7 +28,7 @@ function WaterQualityStandards() {
       <div className="standards-section">
         <div className="standards-header">
             <h3>하천의 생활환경기준</h3>
-            <span>※ 환경정책기본법 시행령 [별표 1] 제2호 관련</span>
+            
         </div>
         <table className="standards-table">
           <thead>
@@ -94,7 +94,7 @@ function WaterQualityStandards() {
                             <th>WQI 점수</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> 
                         {wqiScoreData.map((item, index) => (
                             <tr key={index}>
                                 <td>{item.grade}</td>
