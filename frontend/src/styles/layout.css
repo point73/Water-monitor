@@ -103,11 +103,68 @@ body, #root {
   overflow: hidden;
 }
 
+/* ==== 새로 추가: 카드 헤더 (제목 + 검색창) ==== */
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;  
+}
+
 .map-title {
   font-size: 28px;
   font-weight: bold;
   color: #333;
-  margin: 0 0 5px 0;
+  margin: 0;
+  flex: 0 0 auto;     
+}
+
+/* ==== 새로 추가: 검색창 묶음 ==== */
+.map-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto; 
+}
+
+@media (max-width: 720px) {
+  .map-search { width: 100%; }
+  .map-search-input { flex: 1; width: 100%; }
+}
+
+.map-search-input {
+  width: 340px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 18px;
+  background: #fff;
+}
+
+.map-search-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: #fff;
+}
+
+.map-search-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.map-clear-btn {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: #fff;
+  cursor: pointer;
 }
 
 /* 지도 컨테이너 */
@@ -115,7 +172,7 @@ body, #root {
   flex-grow: 1;
   border-radius: 4px;
   overflow: hidden;
-  height: calc(100% - 40px);
+  height: calc(100% - 0px); /* 헤더가 위로 올라갔으니 별도 -40px 불필요 */
 }
 
 /* react-leaflet 지도가 부모 높이를 100% 차지하도록 설정 */
@@ -158,4 +215,35 @@ body, #root {
 }
 .prediction-chart-card p {
   font-size: 0.67em;
+}
+
+/* ====== (옵션) 클러스터/마커 커스텀 ====== */
+.custom-cluster-icon {
+  background: transparent;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+.custom-cluster-icon .cluster-inner {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #f59e0b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  width: 100%;
+  height: 100%;
+}
+.custom-cluster-icon.small .cluster-inner { border-color: #10b981; }
+.custom-cluster-icon.medium .cluster-inner { border-color: #f59e0b; }
+.custom-cluster-icon.large .cluster-inner { border-color: #ef4444; }
+
+.map-loading-container {
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 8px;
+  height: 100%;
+  color: #64748b;
+  font-weight: 600;
 }

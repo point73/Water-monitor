@@ -1,29 +1,32 @@
-// src/components/MapDashboard.jsx
-
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
-import L from 'leaflet';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import 'leaflet.markercluster';
+import L from "leaflet";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import "leaflet.markercluster";
 import "leaflet/dist/leaflet.css";
-import '../styles/components.css';
+import "../styles/components.css";
 
-// 환경변수에서 지도 설정 가져오기
-const MAP_CENTER_LAT = parseFloat(import.meta.env.VITE_MAP_CENTER_LAT) || 36.6099760003;
-const MAP_CENTER_LNG = parseFloat(import.meta.env.VITE_MAP_CENTER_LNG) || 127.754672;
-const MAP_DEFAULT_ZOOM = parseInt(import.meta.env.VITE_MAP_DEFAULT_ZOOM) || 8;
-const CLUSTER_MAX_RADIUS = parseInt(import.meta.env.VITE_CLUSTER_MAX_RADIUS) || 50;
-const CLUSTER_DISABLE_AT_ZOOM = parseInt(import.meta.env.VITE_CLUSTER_DISABLE_AT_ZOOM) || 15;
+// ====== 환경변수 ======
+const MAP_CENTER_LAT =
+  parseFloat(import.meta.env.VITE_MAP_CENTER_LAT) || 36.6099760003;
+const MAP_CENTER_LNG =
+  parseFloat(import.meta.env.VITE_MAP_CENTER_LNG) || 127.754672;
+const MAP_DEFAULT_ZOOM =
+  parseInt(import.meta.env.VITE_MAP_DEFAULT_ZOOM) || 8;
+const CLUSTER_MAX_RADIUS =
+  parseInt(import.meta.env.VITE_CLUSTER_MAX_RADIUS) || 50;
+const CLUSTER_DISABLE_AT_ZOOM =
+  parseInt(import.meta.env.VITE_CLUSTER_DISABLE_AT_ZOOM) || 15;
+const API_BASE = import.meta.env.VITE_API_BASE || "";
 
-// WQI 점수에 따라 아이콘 색상을 반환하는 함수
+// ====== 유틸 ======
 const getIconColor = (wqi) => {
-  if (wqi <= 50) return '#F56565'; // 나쁨 (빨강)
-  if (wqi <= 75) return '#F59E0B'; // 보통 (주황)
-  return '#3498db'; // 좋음 (파랑)
+  if (wqi <= 50) return "#F56565"; // 나쁨
+  if (wqi <= 75) return "#F59E0B"; // 보통
+  return "#3498db"; // 좋음
 };
 
-// WQI 점수에 따라 동적으로 SVG 아이콘을 생성하는 함수
 const createCustomIcon = (wqi) => {
   const color = getIconColor(wqi);
   const iconHtml = `
@@ -34,15 +37,14 @@ const createCustomIcon = (wqi) => {
   `;
   return L.divIcon({
     html: iconHtml,
-    className: 'custom-svg-icon',
+    className: "custom-svg-icon",
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -32],
   });
 };
 
-
-// 마커 클러스터링을 처리하는 컴포넌트
+// ====== 클러스터 컴포넌트 ======
 function MarkerClusterComponent({ deviceListData, onRegionClick }) {
   const map = useMap();
   const clusterGroupRef = useRef(null);
@@ -60,50 +62,97 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
       showCoverageOnHover: false,
       zoomToBoundsOnClick: true,
       disableClusteringAtZoom: CLUSTER_DISABLE_AT_ZOOM,
-      iconCreateFunction: function(cluster) {
+      iconCreateFunction: function (cluster) {
         const count = cluster.getChildCount();
-        let className = 'custom-cluster-icon';
-        if (count < 10) className += ' small green-cluster';
-        else if (count < 100) className += ' medium';
-        else className += ' large';
+        let className = "custom-cluster-icon";
+        if (count < 10) className += " small green-cluster";
+        else if (count < 100) className += " medium";
+        else className += " large";
 
         return L.divIcon({
           html: `<div class="cluster-inner"><span>${count}</span></div>`,
           className: className,
-          iconSize: count < 10 ? [30, 30] : count < 100 ? [40, 40] : [50, 50]
+          iconSize:
+            count < 10 ? [30, 30] : count < 100 ? [40, 40] : [50, 50],
         });
-      }
+      },
     });
 
-    // 각 디바이스에 대해 WQI 점수에 맞는 아이콘으로 마커 생성
-    deviceListData.forEach(device => {
-      // WQI 점수가 없다면 임의의 값을 부여 (테스트용)
-      const wqi = device.wqi || Math.floor(Math.random() * 81) + 20;
+    deviceListData.forEach((device) => {
+      const wqi = device.wqi ?? Math.floor(Math.random() * 81) + 20;
       const customIcon = createCustomIcon(wqi);
-      
-      const marker = L.marker([device.lat, device.lon], { icon: customIcon });
-      
+      // 마커 옵션에 device 객체 전체를 저장하여 나중에 활용
+      const marker = L.marker([device.lat, device.lon], { 
+        icon: customIcon,
+        deviceData: device 
+      });
+
       marker.bindPopup(`
         <div>
           <strong style="font-size: 1.2em">${device.name}</strong> (WQI: ${wqi})<br/>
+          <span style="font-size: 1.1em">하천: ${device.riverName ?? "-"}</span><br/>
           <span style="font-size: 1.1em">위도: ${device.lat}</span><br/>
           <span style="font-size: 1.1em">경도: ${device.lon}</span>
         </div>
       `);
-      
-      marker.on('click', () => {
-        if (onRegionClick) {
-          onRegionClick({
-            deviceId: device.deviceId,
-            name: device.name,
-            lat: device.lat,
-            lng: device.lon,
-          });
-        }
+
+      marker.on("click", () => {
+        onRegionClick?.({
+          deviceId: device.deviceId,
+          name: device.name,
+          lat: device.lat,
+          lng: device.lon,
+        });
       });
 
       markerClusterGroup.addLayer(marker);
     });
+
+    // =================================================================
+    // ▼▼▼ 클러스터 호버 기능 추가 ▼▼▼
+    // =================================================================
+    markerClusterGroup.on('clustermouseover', (e) => {
+      const markers = e.layer.getAllChildMarkers();
+      const riverNameCounts = markers.reduce((acc, marker) => {
+        // 마커 옵션에 저장된 deviceData 사용
+        const name = marker.options.deviceData?.riverName || '정보 없음';
+        acc[name] = (acc[name] || 0) + 1;
+        return acc;
+      }, {});
+
+      // 하천별 개수를 기준으로 내림차순 정렬
+      const sortedNames = Object.entries(riverNameCounts).sort((a, b) => b[1] - a[1]);
+      
+      let tooltipContent = '<div class="cluster-tooltip-content">';
+      tooltipContent += '<strong>포함된 주요 하천</strong>';
+      
+      // 상위 3개 하천 정보만 표시
+      const topN = sortedNames.slice(0, 3);
+      topN.forEach(([name, count]) => {
+        tooltipContent += `<div>${name} (${count}개소)</div>`;
+      });
+
+      if (sortedNames.length > 3) {
+        tooltipContent += `<div>... 외 ${sortedNames.length - 3}개</div>`;
+      }
+      tooltipContent += '</div>';
+      
+      // 툴팁 생성 및 표시
+      e.layer.bindTooltip(tooltipContent, {
+        direction: 'top',
+        sticky: true, // 마우스를 따라다니도록 설정
+        offset: [10, 0],
+        className: 'custom-cluster-tooltip'
+      }).openTooltip();
+    });
+
+    markerClusterGroup.on('clustermouseout', (e) => {
+      // 마우스가 클러스터를 벗어나면 툴팁 제거
+      e.layer.unbindTooltip();
+    });
+    // =================================================================
+    // ▲▲▲ 클러스터 호버 기능 끝 ▲▲▲
+    // =================================================================
 
     map.addLayer(markerClusterGroup);
     clusterGroupRef.current = markerClusterGroup;
@@ -118,52 +167,101 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
   return null;
 }
 
+// ====== 지도 리사이즈 ======
+function ResizeMap() {
+  const map = useMap();
+  useEffect(() => {
+    const t = setTimeout(() => map.invalidateSize(), 0);
+    return () => clearTimeout(t);
+  }, [map]);
+  return null;
+}
+
+// ====== 메인 컴포넌트 ======
 function MapDashboard({
   onRegionClick,
-  deviceListData,
+  deviceListData = [],
   isDeviceListLoading,
+  isTop5Mode,
+  onShowAll,
+  selectedDate,
 }) {
-  function ResizeMap() {
-    const map = useMap();
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 0);
-    return null;
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
+  const abortRef = useRef(null);
+
+  const filteredList = useMemo(() => {
+    if (results && Array.isArray(results)) return results;
+    if (!query.trim()) return deviceListData;
+    const q = query.trim().toLowerCase();
+    return deviceListData.filter((d) =>
+      String(d.riverName ?? d.name ?? "").toLowerCase().includes(q)
+    );
+  }, [results, deviceListData, query]);
+  
+  if (isDeviceListLoading) {
+    return <div className="map-loading-container">지도 데이터 로딩 중...</div>;
   }
 
-  if (isDeviceListLoading) {
-    return (
-      <div className="map-loading-container">
-        지도 데이터 로딩 중...
-      </div>
-    );
-  }
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}년 ${month}월 ${day}일`;
+  };
 
   return (
-    <div className="map-dashboard-container">
-      <MapContainer
-        center={[MAP_CENTER_LAT, MAP_CENTER_LNG]}
-        zoom={MAP_DEFAULT_ZOOM}
-        scrollWheelZoom={true}
-        wheelPxPerZoomLevel={120}
-        style={{ height: "100%", width: "100%" }}
-        className="custom-map-container"
-        preferCanvas={true}
-        renderer={L.canvas()}
-      >
-        <ResizeMap />
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        
-        {Array.isArray(deviceListData) && (
-          <MarkerClusterComponent 
-            deviceListData={deviceListData} 
-            onRegionClick={onRegionClick}
+    <div className="map-card">
+      <div className="map-header">
+        <div className="map-title-section">
+          <h2 className="map-title">
+            {isTop5Mode
+              ? `${formatDate(selectedDate)} 오염도 TOP 5`
+              : "전국 오염 지도"}
+          </h2>
+          {isTop5Mode && (
+            <button onClick={onShowAll} className="show-all-btn">
+              전체 보기
+            </button>
+          )}
+        </div>
+        <div className="map-search">
+          <input
+            type="text"
+            placeholder="하천 이름으로 검색..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="map-search-input"
           />
-        )}
-      </MapContainer>
+          <button disabled={isSearching} className="map-search-btn">
+            {isSearching ? "검색중…" : "검색"}
+          </button>
+        </div>
+      </div>
+      <div className="map-container">
+        <MapContainer
+          center={[MAP_CENTER_LAT, MAP_CENTER_LNG]}
+          zoom={MAP_DEFAULT_ZOOM}
+          scrollWheelZoom={true}
+          wheelPxPerZoomLevel={120}
+          className="custom-map-container"
+          preferCanvas={true}
+          renderer={L.canvas()}
+        >
+          <ResizeMap />
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {Array.isArray(filteredList) && (
+            <MarkerClusterComponent
+              deviceListData={filteredList}
+              onRegionClick={onRegionClick}
+            />
+          )}
+        </MapContainer>
+      </div>
     </div>
   );
 }

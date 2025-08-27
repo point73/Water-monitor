@@ -26,29 +26,23 @@ function TimeRangePage() {
   // 다운로드 상태
   const [downloading, setDownloading] = useState({ csv: false, excel: false });
 
-  // 유틸: 값 포맷
+  // 유틸
   const dateOnly = (v) => (v ? String(v).slice(0, 10) : "");
   const pickDateField = (r) => r?.measuredAt ?? r?.timestamp ?? r?.time ?? r?.date ?? "";
   const fmt = (v) => (v === null || v === undefined ? "-" : v);
-
-  // 유틸: 측정소명 통일해서 꺼내기
   const pickStation = (r) => r?.name ?? r?.stationName ?? r?.locatn ?? "";
 
-  // 유틸: 문자열 정규화(대소문자/공백 무시)
   const normalize = (s) =>
-    (s ?? "")
-      .toString()
-      .toLowerCase()
-      .replace(/\s+/g, "");
+    (s ?? "").toString().toLowerCase().replace(/\s+/g, "");
 
-  // 표시용 행: 기간 결과(rows)에서 측정소명(stationQuery)로 추가 필터
+  // 표시용 행
   const displayRows = useMemo(() => {
     if (!stationQuery.trim()) return rows;
     const q = normalize(stationQuery);
     return rows.filter((r) => normalize(pickStation(r)).includes(q));
   }, [rows, stationQuery]);
 
-  // 다운로드 버튼 활성화: 검색 완료 && 표시 데이터 존재 && 로딩 아님
+  // 다운로드 버튼 활성화
   const canDownload = searchedDateRange && displayRows.length > 0 && !loading;
 
   // 기간 조회
@@ -72,7 +66,6 @@ function TimeRangePage() {
       const data = await sensorApi.getSensorHistory(startDate, endDate);
       setRows(Array.isArray(data) ? data : []);
       setSearchedDateRange({ startDate, endDate });
-      console.log("검색 결과:", data?.length || 0, "건");
     } catch (err) {
       console.error(err);
       setError(err?.message || "데이터 조회 중 오류가 발생했습니다.");
@@ -81,35 +74,37 @@ function TimeRangePage() {
     }
   }, [startDate, endDate]);
 
-  // CSV 다운로드 (필터 적용 버전: 현재 표시 중인 데이터만 CSV 요청하고 싶다면 백엔드에 별도 엔드포인트 필요)
-  const handleCsvDownload = async () => {
+  // 공통 다운로드 함수
+  const handleDownload = async (type) => {
     if (!searchedDateRange) return;
-    setDownloading((p) => ({ ...p, csv: true }));
+    setDownloading((p) => ({ ...p, [type]: true }));
+
     try {
-      await sensorApi.downloadCSV(searchedDateRange.startDate, searchedDateRange.endDate);
-      console.log('✅ CSV 다운로드 시작됨');
+      const blob = await sensorApi[`download${type.toUpperCase()}`](
+        searchedDateRange.startDate,
+        searchedDateRange.endDate
+      );
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `sensor_data_${searchedDateRange.startDate}_${searchedDateRange.endDate}.${type}`
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
     } catch (err) {
-      console.error('❌ CSV 다운로드 오류:', err);
-      setError(err?.message || "CSV 다운로드 중 오류가 발생했습니다.");
+      console.error(`❌ ${type.toUpperCase()} 다운로드 오류:`, err);
+      setError(err?.message || `${type.toUpperCase()} 다운로드 중 오류가 발생했습니다.`);
     } finally {
-      setTimeout(() => setDownloading((p) => ({ ...p, csv: false })), 2000);
+      setDownloading((p) => ({ ...p, [type]: false }));
     }
   };
 
-  // Excel 다운로드
-  const handleExcelDownload = async () => {
-    if (!searchedDateRange) return;
-    setDownloading((p) => ({ ...p, excel: true }));
-    try {
-      await sensorApi.downloadExcel(searchedDateRange.startDate, searchedDateRange.endDate);
-      console.log('✅ Excel 다운로드 시작됨');
-    } catch (err) {
-      console.error('❌ Excel 다운로드 오류:', err);
-      setError(err?.message || "Excel 다운로드 중 오류가 발생했습니다.");
-    } finally {
-      setTimeout(() => setDownloading((p) => ({ ...p, excel: false })), 2000);
-    }
-  };
+  const handleCsvDownload = () => handleDownload("csv");
+  const handleExcelDownload = () => handleDownload("excel");
 
   // 초기화
   const handleReset = () => {
@@ -119,7 +114,6 @@ function TimeRangePage() {
     setError("");
   };
 
-  // Enter 키로 검색 실행
   const handleKeyDown = (e) => {
     if (e.key === "Enter") handleSearch();
   };
@@ -157,7 +151,7 @@ function TimeRangePage() {
           <span style={{ marginLeft: 12 }}>측정소명</span>
           <input
             type="text"
-            placeholder="예: 금남교, 용산교 …"
+            placeholder="예: 내린천, 유등천 …"
             value={stationQuery}
             onChange={(e) => setStationQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -236,7 +230,7 @@ function TimeRangePage() {
             color: '#666'
           }}>
             📅 기간: {searchedDateRange.startDate} ~ {searchedDateRange.endDate}
-            {` | `}
+            {" | "}
             🔎 측정소: {stationQuery.trim() ? `"${stationQuery.trim()}"` : '전체'}
             {displayRows.length > 0 && ` (표시 ${displayRows.length}건 / 원본 ${rows.length}건)`}
           </div>
