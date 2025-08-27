@@ -1,7 +1,7 @@
 // src/components/TimeRangePage.jsx
 import React, { useMemo, useState, useCallback } from "react";
-import { sensorApi } from '../api';
-import '../styles/components.css';
+import { sensorApi } from "../api";
+import "../styles/components.css";
 
 function TimeRangePage() {
   const todayStr = new Date().toISOString().slice(0, 10);
@@ -26,11 +26,29 @@ function TimeRangePage() {
   // 다운로드 상태
   const [downloading, setDownloading] = useState({ csv: false, excel: false });
 
-  // 유틸
+  // ===== 유틸/필드 추출기 =====
   const dateOnly = (v) => (v ? String(v).slice(0, 10) : "");
-  const pickDateField = (r) => r?.measuredAt ?? r?.timestamp ?? r?.time ?? r?.date ?? "";
+  const pickDateField = (r) =>
+    r?.measuredAt ?? r?.timestamp ?? r?.time ?? r?.date ?? "";
   const fmt = (v) => (v === null || v === undefined ? "-" : v);
   const pickStation = (r) => r?.name ?? r?.stationName ?? r?.locatn ?? "";
+
+  const pickPH = (r) => r?.ph ?? r?.PH ?? r?.pH;
+  const pickDO = (r) => r?.doValue ?? r?.do ?? r?.DO;
+  const pickTemp = (r) =>
+    r?.waterTemp ?? r?.temp ?? r?.temperature ?? r?.wt ?? r?.wtemp;
+  const pickEC = (r) => r?.ec ?? r?.EC ?? r?.conductivity;
+  const pickBOD = (r) => r?.bod ?? r?.BOD;
+  const pickCOD = (r) => r?.cod ?? r?.COD;
+  const pickTP = (r) =>
+    r?.tp ?? r?.TP ?? r?.tP ?? r?.totalPhosphorus ?? r?.total_phosphorus;
+  const pickTN = (r) =>
+    r?.tn ?? r?.TN ?? r?.tN ?? r?.totalNitrogen ?? r?.total_nitrogen;
+  const pickSS = (r) => r?.ss ?? r?.SS ?? r?.suspendedSolids;
+  const pickChl = (r) =>
+    r?.chlorophyll ?? r?.chl ?? r?.chla ?? r?.chlorophy ?? r?.chlorophyll_a;
+  const pickNO3N = (r) =>
+    r?.no3n ?? r?.NO3N ?? r?.no3 ?? r?.nitrate ?? r?.nitrateN;
 
   const normalize = (s) =>
     (s ?? "").toString().toLowerCase().replace(/\s+/g, "");
@@ -162,18 +180,14 @@ function TimeRangePage() {
         </div>
 
         <div className="filter-buttons">
-          <button
-            onClick={handleSearch}
-            disabled={loading}
-            className="search-button"
-          >
+          <button onClick={handleSearch} disabled={loading} className="search-button">
             {loading ? "검색 중…" : "검색"}
           </button>
           <button
             onClick={handleReset}
             disabled={loading && !rows.length}
             className="search-button"
-            style={{ marginLeft: 8, backgroundColor: '#e5e7eb', color: '#111827' }}
+            style={{ marginLeft: 8, backgroundColor: "#e5e7eb", color: "#111827" }}
             title="검색조건/결과 초기화"
           >
             초기화
@@ -193,12 +207,10 @@ function TimeRangePage() {
               title={!canDownload ? "먼저 검색을 실행해주세요" : "CSV 다운로드"}
               style={{
                 opacity: !canDownload ? 0.5 : 1,
-                cursor: !canDownload ? 'not-allowed' : 'pointer'
+                cursor: !canDownload ? "not-allowed" : "pointer",
               }}
             >
-              <span style={{ marginRight: 8 }}>
-                {downloading.csv ? "⏳" : "⬇️"}
-              </span>
+              <span style={{ marginRight: 8 }}>{downloading.csv ? "⏳" : "⬇️"}</span>
               {downloading.csv ? "다운로드 중..." : "CSV"}
             </button>
             <button
@@ -207,13 +219,11 @@ function TimeRangePage() {
               title={!canDownload ? "먼저 검색을 실행해주세요" : "EXCEL 다운로드"}
               style={{
                 opacity: !canDownload ? 0.5 : 1,
-                cursor: !canDownload ? 'not-allowed' : 'pointer',
-                marginLeft: 8
+                cursor: !canDownload ? "not-allowed" : "pointer",
+                marginLeft: 8,
               }}
             >
-              <span style={{ marginRight: 8 }}>
-                {downloading.excel ? "⏳" : "⬇️"}
-              </span>
+              <span style={{ marginRight: 8 }}>{downloading.excel ? "⏳" : "⬇️"}</span>
               {downloading.excel ? "다운로드 중..." : "EXCEL"}
             </button>
           </div>
@@ -221,51 +231,52 @@ function TimeRangePage() {
 
         {/* 검색된 날짜 범위 + 현재 필터 상태 */}
         {searchedDateRange && (
-          <div style={{
-            marginBottom: '10px',
-            padding: '8px 12px',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '4px',
-            fontSize: '14px',
-            color: '#666'
-          }}>
-            📅 기간: {searchedDateRange.startDate} ~ {searchedDateRange.endDate}
-            {" | "}
-            🔎 측정소: {stationQuery.trim() ? `"${stationQuery.trim()}"` : '전체'}
+          <div
+            style={{
+              marginBottom: "10px",
+              padding: "8px 12px",
+              backgroundColor: "#f8f9fa",
+              borderRadius: "4px",
+              fontSize: "14px",
+              color: "#666",
+            }}
+          >
+            📅 기간: {searchedDateRange.startDate} ~ {searchedDateRange.endDate}{" "}
+            {" | "} 🔎 측정소: {stationQuery.trim() ? `"${stationQuery.trim()}"` : "전체"}
             {displayRows.length > 0 && ` (표시 ${displayRows.length}건 / 원본 ${rows.length}건)`}
           </div>
         )}
 
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
+        {error && <div className="error-message">{error}</div>}
 
         {!loading && !error && searchedDateRange && displayRows.length === 0 && (
           <div className="no-data-message">
-            검색 결과가 없습니다. (조건: 기간 {startDate}~{endDate}, 측정소명 {stationQuery || '전체'})
+            검색 결과가 없습니다. (조건: 기간 {startDate}~{endDate}, 측정소명 {stationQuery || "전체"})
           </div>
         )}
 
         {!searchedDateRange && !loading && !error && (
-          <div className="no-data-message">
-            기간을 설정하고 검색 버튼을 눌러 데이터를 조회해주세요.
-          </div>
+          <div className="no-data-message">기간을 설정하고 검색 버튼을 눌러 데이터를 조회해주세요.</div>
         )}
 
         {displayRows.length > 0 && (
-          <div className="data-table-wrapper">
-            <table className="data-table">
+          <div className="data-table-wrapper horizontal-scroll">
+            <table className="data-table wide-table">
               <thead>
                 <tr>
                   <th className="table-header">번호</th>
                   <th className="table-header">측정소명</th>
                   <th className="table-header">년/월/일</th>
-                  <th className="table-header">PH(mg/L)</th>
+                  <th className="table-header">pH</th>
                   <th className="table-header">DO(mg/L)</th>
+                  <th className="table-header">수온(°C)</th>
+                  <th className="table-header">EC</th>
                   <th className="table-header">BOD(mg/L)</th>
                   <th className="table-header">COD(mg/L)</th>
+                  <th className="table-header">T-P(mg/L)</th>
+                  <th className="table-header">T-N(mg/L)</th>
+                  <th className="table-header">SS(mg/L)</th>
+                  <th className="table-header">NO3-N(mg/L)</th>
                 </tr>
               </thead>
               <tbody>
@@ -277,10 +288,16 @@ function TimeRangePage() {
                       <td className="table-cell">{idx + 1}</td>
                       <td className="table-cell">{station}</td>
                       <td className="table-cell">{ymd}</td>
-                      <td className="table-cell">{fmt(row.ph)}</td>
-                      <td className="table-cell">{fmt(row.doValue ?? row.do)}</td>
-                      <td className="table-cell">{fmt(row.bod)}</td>
-                      <td className="table-cell">{fmt(row.cod)}</td>
+                      <td className="table-cell">{fmt(pickPH(row))}</td>
+                      <td className="table-cell">{fmt(pickDO(row))}</td>
+                      <td className="table-cell">{fmt(pickTemp(row))}</td>
+                      <td className="table-cell">{fmt(pickEC(row))}</td>
+                      <td className="table-cell">{fmt(pickBOD(row))}</td>
+                      <td className="table-cell">{fmt(pickCOD(row))}</td>
+                      <td className="table-cell">{fmt(pickTP(row))}</td>
+                      <td className="table-cell">{fmt(pickTN(row))}</td>
+                      <td className="table-cell">{fmt(pickSS(row))}</td>
+                      <td className="table-cell">{fmt(pickNO3N(row))}</td>
                     </tr>
                   );
                 })}

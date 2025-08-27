@@ -4,7 +4,8 @@ import 'react-calendar/dist/Calendar.css';
 import '../styles/components.css';
 import logo from '../assets/logo.png'; // 로고 이미지를 import 합니다.
 
-function Sidebar({ date, setDate, setActivePage }) {
+// App.jsx에서 알람 패널을 제어할 onToggleAlarms 함수를 prop으로 받습니다.
+function Sidebar({ date, setDate, setActivePage, onToggleAlarms }) {
   return (
     <aside className="sidebar-container">
       <div className="sidebar-content">
@@ -40,6 +41,14 @@ function Sidebar({ date, setDate, setActivePage }) {
           >
             자료 조회
           </button>
+          {/* ▼▼▼ 새로운 알람 버튼 ▼▼▼ */}
+          <button 
+            onClick={onToggleAlarms} 
+            className="sidebar-button alarm-button"
+          >
+            알림
+          </button>
+          {/* ▲▲▲ 새로운 알람 버튼 ▲▲▲ */}
         </div>
       </div>
       
