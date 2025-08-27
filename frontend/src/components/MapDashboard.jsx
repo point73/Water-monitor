@@ -81,12 +81,12 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
     deviceListData.forEach((device) => {
       const wqi = device.wqi ?? Math.floor(Math.random() * 81) + 20;
       const customIcon = createCustomIcon(wqi);
-      // 마커 옵션에 device 객체 전체를 저장하여 나중에 활용
       const marker = L.marker([device.lat, device.lon], { 
         icon: customIcon,
         deviceData: device 
       });
 
+      // 클릭 시 나타나는 팝업
       marker.bindPopup(`
         <div>
           <strong style="font-size: 1.2em">${device.name}</strong> (WQI: ${wqi})<br/>
@@ -95,6 +95,14 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
           <span style="font-size: 1.1em">경도: ${device.lon}</span>
         </div>
       `);
+
+      // 마우스 호버 시 나타나는 툴팁 추가
+      marker.bindTooltip(device.name, {
+        direction: 'top',
+        sticky: true,
+        offset: [0, -32],
+        className: 'custom-marker-tooltip'
+      });
 
       marker.on("click", () => {
         onRegionClick?.({
@@ -108,25 +116,20 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
       markerClusterGroup.addLayer(marker);
     });
 
-    // =================================================================
-    // ▼▼▼ 클러스터 호버 기능 추가 ▼▼▼
-    // =================================================================
+    // 클러스터 호버 기능
     markerClusterGroup.on('clustermouseover', (e) => {
       const markers = e.layer.getAllChildMarkers();
       const riverNameCounts = markers.reduce((acc, marker) => {
-        // 마커 옵션에 저장된 deviceData 사용
         const name = marker.options.deviceData?.riverName || '정보 없음';
         acc[name] = (acc[name] || 0) + 1;
         return acc;
       }, {});
 
-      // 하천별 개수를 기준으로 내림차순 정렬
       const sortedNames = Object.entries(riverNameCounts).sort((a, b) => b[1] - a[1]);
       
       let tooltipContent = '<div class="cluster-tooltip-content">';
       tooltipContent += '<strong>포함된 주요 하천</strong>';
       
-      // 상위 3개 하천 정보만 표시
       const topN = sortedNames.slice(0, 3);
       topN.forEach(([name, count]) => {
         tooltipContent += `<div>${name} (${count}개소)</div>`;
@@ -137,22 +140,17 @@ function MarkerClusterComponent({ deviceListData, onRegionClick }) {
       }
       tooltipContent += '</div>';
       
-      // 툴팁 생성 및 표시
       e.layer.bindTooltip(tooltipContent, {
         direction: 'top',
-        sticky: true, // 마우스를 따라다니도록 설정
+        sticky: true,
         offset: [10, 0],
         className: 'custom-cluster-tooltip'
       }).openTooltip();
     });
 
     markerClusterGroup.on('clustermouseout', (e) => {
-      // 마우스가 클러스터를 벗어나면 툴팁 제거
       e.layer.unbindTooltip();
     });
-    // =================================================================
-    // ▲▲▲ 클러스터 호버 기능 끝 ▲▲▲
-    // =================================================================
 
     map.addLayer(markerClusterGroup);
     clusterGroupRef.current = markerClusterGroup;
