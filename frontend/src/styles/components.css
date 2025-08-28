@@ -796,7 +796,7 @@
   flex-direction: column;
   box-shadow: 4px 0 15px rgba(0,0,0,0.08);
 
-  border-radius: 0 12px 12px 0; /* 오른쪽만 둥글게 */
+  border-radius: 8px; /* 모든 모서리 둥글게 */
   overflow: hidden;
 
   animation: revealIn 0.35s ease-out;

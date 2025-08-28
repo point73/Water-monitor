@@ -1,30 +1,26 @@
-/* 기본 스타일 초기화 및 전체 폰트 설정 */
+/* ==================== 기본 초기화 ==================== */
 body, #root {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  font-family: 'Pretendard', sans-serif;
   background-color: #f0f2f5;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* 전체 앱 컨테이너 */
+/* ==================== 앱 전체 레이아웃 ==================== */
 .app-container {
   background-color: #1f2937;
   padding: 15px;
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
   box-sizing: border-box;
   overflow: hidden;
 }
 
-/* 사이드바와 메인 콘텐츠를 감싸는 레이아웃 */
 .app-layout {
   position: relative;
   display: flex;
@@ -33,7 +29,6 @@ body, #root {
   overflow: hidden;
 }
 
-/* 메인 콘텐츠 영역 */
 .main-content {
   flex-grow: 1;
   padding: 10px;
@@ -44,54 +39,51 @@ body, #root {
   gap: 10px;
   overflow: hidden;
   height: 100%;
+  box-sizing: border-box;
+  min-height: 0;
 }
 
-/* 하단 대시보드 행 (왼쪽 열 + 지도) */
+/* ==================== 대시보드 하단 ==================== */
 .dashboard-row {
   display: flex;
   gap: 10px;
-  flex-grow: 1;
-  height: calc(100% - 120px);
+  flex: 1;
   min-height: 0;
   overflow: hidden;
 }
 
-/* 왼쪽 열 (이상 감지 + 예측 차트) */
 .left-column {
   flex: 0.4;
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-width: 0;
-  height: 100%;
+  min-height: 0;
   overflow: hidden;
 }
 
-/* 이상 감지 영역 Wrapper */
 .anomaly-detection-wrapper {
   flex: 0.05;
   display: flex;
   min-height: 0;
 }
 
-/* 예측 차트 영역 Wrapper */
 .prediction-chart-wrapper {
   flex: 0.95;
   display: flex;
   min-height: 0;
 }
 
-/* 지도 영역 */
 .map-wrapper {
   flex: 0.6;
   display: flex;
   flex-direction: column;
   min-width: 0;
-  height: 100%;
+  min-height: 0;
   overflow: hidden;
 }
 
-/* 지도를 감싸는 카드 */
+/* ==================== 지도 카드 ==================== */
 .map-card {
   background-color: #ffffff;
   border-radius: 5px;
@@ -102,16 +94,17 @@ body, #root {
   flex-grow: 1;
   height: 100%;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* ==== 새로 추가: 카드 헤더 (제목 + 검색창) ==== */
 .map-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 6px;
-  flex-wrap: wrap;  
+  flex-wrap: nowrap;
+  flex-shrink: 0;
 }
 
 .map-title {
@@ -119,20 +112,18 @@ body, #root {
   font-weight: bold;
   color: #333;
   margin: 0;
-  flex: 0 0 auto;     
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ==== 새로 추가: 검색창 묶음 ==== */
 .map-search {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto; 
-}
-
-@media (max-width: 720px) {
-  .map-search { width: 100%; }
-  .map-search-input { flex: 1; width: 100%; }
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .map-search-input {
@@ -168,29 +159,33 @@ body, #root {
   cursor: pointer;
 }
 
-/* 지도 컨테이너 */
 .map-container {
   flex-grow: 1;
   border-radius: 4px;
   overflow: hidden;
-  height: calc(100% - 0px); /* 헤더가 위로 올라갔으니 별도 -40px 불필요 */
+  min-height: 0;
 }
 
-/* react-leaflet 지도가 부모 높이를 100% 차지하도록 설정 */
 .leaflet-container {
   width: 100%;
-  height: 100%;
+  height: 100% !important;
 }
 
-/* --- 개별 컴포넌트 크기 조절을 위한 코드 추가 --- */
-
-/* 사이드바 크기 */
+/* ==================== 사이드바 ==================== */
 .sidebar {
   width: 160px;
   padding: 13px 7px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
-/* 센서 박스 컨테이너 */
+.sidebar .react-calendar {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==================== 센서 박스 ==================== */
 .sensor-boxes-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -199,32 +194,26 @@ body, #root {
   flex-shrink: 0;
 }
 
-/* 이상 감지 카드 내부 */
-.anomaly-detection-card h2 {
-  font-size: 12px;
-  margin-bottom: 8px;
-}
-.anomaly-detection-card li {
-  font-size: 0.67em;
-  gap: 5px;
-}
-
-/* 예측 차트 카드 내부 */
+/* ==================== 카드 텍스트 ==================== */
+.anomaly-detection-card h2,
 .prediction-chart-card h2 {
   font-size: 12px;
   margin-bottom: 8px;
 }
+.anomaly-detection-card li,
 .prediction-chart-card p {
   font-size: 0.67em;
+  gap: 5px;
 }
 
-/* ====== (옵션) 클러스터/마커 커스텀 ====== */
+/* ==================== 클러스터 ==================== */
 .custom-cluster-icon {
   background: transparent;
   border-radius: 50%;
   display: grid;
   place-items: center;
 }
+
 .custom-cluster-icon .cluster-inner {
   display: grid;
   place-items: center;
@@ -235,6 +224,7 @@ body, #root {
   width: 100%;
   height: 100%;
 }
+
 .custom-cluster-icon.small .cluster-inner { border-color: #10b981; }
 .custom-cluster-icon.medium .cluster-inner { border-color: #f59e0b; }
 .custom-cluster-icon.large .cluster-inner { border-color: #ef4444; }
@@ -247,4 +237,43 @@ body, #root {
   height: 100%;
   color: #64748b;
   font-weight: 600;
+}
+
+/* ==================== 반응형 ==================== */
+@media (max-width: 960px) {
+  .sensor-boxes-container {
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+  }
+
+  .map-search-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-row {
+    flex-direction: column;
+  }
+
+  .left-column,
+  .map-wrapper {
+    flex: none;
+    height: 50%;
+    min-height: 0;
+  }
+
+  .sensor-boxes-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .map-search {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .map-search-input {
+    flex: 1;
+    width: 100%;
+  }
 }

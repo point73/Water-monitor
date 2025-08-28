@@ -8,6 +8,7 @@ function AnomalyDetection({ deviceListData = [] }) {
   useEffect(() => {
     let list = [];
 
+    // 다양한 형태의 deviceListData를 배열로 일관되게 처리
     if (Array.isArray(deviceListData)) {
       list = deviceListData;
     } else if (deviceListData && typeof deviceListData === 'object') {
@@ -22,27 +23,31 @@ function AnomalyDetection({ deviceListData = [] }) {
       return;
     }
 
+    // 각 측정소에 20~100 사이의 랜덤 WQI 점수 할당
     const stationsWithWqi = list.map((device) => ({
       ...device,
       wqi: Math.floor(Math.random() * 81) + 20,
     }));
 
+    // WQI 점수가 낮은 순서(취약한 순서)대로 정렬
     const sortedStations = stationsWithWqi
       .slice()
       .sort((a, b) => a.wqi - b.wqi);
 
+    // 상위 3개 측정소만 선택
     setRankedStations(sortedStations.slice(0, 3));
   }, [deviceListData]);
 
+  // WQI 점수에 따라 색상을 반환하는 함수
   const getWqiColor = (wqi) => {
-    if (wqi <= 50) return '#F56565'; // 나쁨
-    if (wqi <= 75) return '#F59E0B'; // 보통
-    return '#48BB78'; // 좋음
+    if (wqi <= 50) return '#F56565'; // 나쁨 (빨간색)
+    if (wqi <= 75) return '#F59E0B'; // 보통 (주황색)
+    return '#48BB78'; // 좋음 (초록색)
   };
 
   return (
-    <div className="anomaly-container" style={{ paddingTop: '1px' }}>
-      <h2 className="anomaly-title">이상 감지 상위 지역 (WQI 기준)</h2>
+    <div className="anomaly-container">
+      <h2 className="anomaly-title">수질 취약 지역</h2>
 
       {rankedStations.length > 0 ? (
         <ul className="anomaly-list">

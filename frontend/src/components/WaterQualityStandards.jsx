@@ -15,11 +15,11 @@ const riverStandardsData = [
 
 // WQI 등급별 점수 데이터
 const wqiScoreData = [
-    { grade: '매우 좋음', score: '91 ~ 100' },
-    { grade: '좋음', score: '76 ~ 90' },
-    { grade: '보통', score: '51 ~ 75' },
-    { grade: '나쁨', score: '26 ~ 50' },
-    { grade: '매우 나쁨', score: '0 ~ 25' },
+    { grade: '매우 좋음', score: '90 ~ 100' },
+    { grade: '좋음', score: '70 ~ 89' },
+    { grade: '보통', score: '50 ~ 69' },
+    { grade: '나쁨', score: '25 ~ 49' },
+    { grade: '매우 나쁨', score: '0 ~ 24' },
 ];
 
 function WaterQualityStandards() {
