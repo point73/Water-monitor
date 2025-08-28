@@ -41,6 +41,12 @@ function Sidebar({ date, setDate, setActivePage, onToggleAlarms }) {
           >
             자료 조회
           </button>
+          <button 
+            onClick={() => setActivePage('prediction')} 
+            className="sidebar-button prediction-button"
+          >
+            AI 수질 예측
+          </button>
           {/* ▼▼▼ 새로운 알람 버튼 ▼▼▼ */}
           <button 
             onClick={onToggleAlarms} 

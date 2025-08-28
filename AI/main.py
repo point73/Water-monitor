@@ -71,7 +71,7 @@ def predict_all_with_sensors(request: AllSugyePredictionRequest):
             all_predictions[sugye_name] = f"Error: 센서 데이터 변환 중 오류 - {e}"
             continue
 
-        # one-hot 인코딩 컬럼 초기화 후 현재 수계만 1
+        # one-hot 인코딩 컬럼 초기화 후 현재 수계만 1l
         for col in sugye_feature_names:
             future_df[col] = 0
         future_df[f"수계별_{sugye_name}"] = 1
@@ -136,3 +136,8 @@ def predict_future(request: AllSugyePredictionRequest, days: int = Query(30, des
         all_predictions[sugye_name] = results.to_dict('records')
 
     return all_predictions
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
