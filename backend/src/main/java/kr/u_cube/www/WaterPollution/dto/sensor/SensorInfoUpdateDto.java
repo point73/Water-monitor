@@ -1,4 +1,4 @@
-package kr.u_cube.www.WaterPollution.dto;
+package kr.u_cube.www.WaterPollution.dto.sensor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,7 +2,7 @@ package kr.u_cube.www.WaterPollution.service.email;
 
 import org.springframework.stereotype.Service;
 
-import kr.u_cube.www.WaterPollution.dto.SensorDataDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorDataDto;
 import kr.u_cube.www.WaterPollution.entity.SensorAlert;
 import kr.u_cube.www.WaterPollution.entity.SensorAlert.AlertLevel;
 import kr.u_cube.www.WaterPollution.entity.SensorData;

@@ -5,7 +5,7 @@ import java.util.List;
 
 import kr.u_cube.www.WaterPollution.dto.HistoryDataDto;
 import kr.u_cube.www.WaterPollution.dto.LatestSensorDto;
-import kr.u_cube.www.WaterPollution.dto.SensorInfoDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorInfoDto;
 import kr.u_cube.www.WaterPollution.service.sensor.SensorDataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import kr.u_cube.www.WaterPollution.dto.HistoryDataDto;
 import kr.u_cube.www.WaterPollution.dto.LatestSensorDto;
-import kr.u_cube.www.WaterPollution.dto.SensorDataDto;
-import kr.u_cube.www.WaterPollution.dto.SensorInfoDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorDataDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorInfoDto;
 import kr.u_cube.www.WaterPollution.entity.SensorData;
 import kr.u_cube.www.WaterPollution.entity.SensorInfo;
 import kr.u_cube.www.WaterPollution.repository.SensorDataRepository;

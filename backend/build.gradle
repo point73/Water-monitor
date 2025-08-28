@@ -45,12 +45,18 @@ dependencies {
 	// ✅ MQTT 클라이언트
 	implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
 
+	// ✅ 🆕 HTTP 클라이언트 (AI 서버 통신용)
+	implementation 'org.apache.httpcomponents.client5:httpclient5:5.3'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 	// ✅ Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-	// ✅ Jackson 파싱
+	// ✅ Jackson 파싱 (JSON 처리 강화)
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.core:jackson-core'
 
 	// ✅ DB
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -58,10 +64,18 @@ dependencies {
 
 	// ✅ E-mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// ✅ 🆕 비동기 처리 및 스케줄링 강화
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	
 	// ✅ TEST
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
+	// ✅ 🆕 테스트용 WebSocket 및 AI 통신 테스트
+	testImplementation 'org.springframework.boot:spring-boot-starter-websocket'
+	testImplementation 'org.mockito:mockito-core'
+	testImplementation 'org.springframework:spring-test'
 }
 
 tasks.named('test') {

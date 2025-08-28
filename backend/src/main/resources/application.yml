@@ -28,6 +28,13 @@ spring:
             enable: true
     default-encoding: UTF-8
 
+  # HTTP 클라이언트 관련 모든 자동 설정 비활성화
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.http.client.HttpClientAutoConfiguration
+      - org.springframework.boot.autoconfigure.web.client.RestClientAutoConfiguration
+      - org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration
+
 mqtt:
   broker: ${MQTT_BROKER}
   topic: ${MQTT_TOPIC}
@@ -35,6 +42,11 @@ mqtt:
 alert:
   email:
     recipient: ${MAIL_USERNAME}
+
+    # AI 서버 타임아웃 설정 추가
+ai:
+  server:
+    timeout: 10000
 
 # 기존 설정들 (DB, MQTT, 메일 등)...
 

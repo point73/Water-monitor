@@ -3,8 +3,8 @@ package kr.u_cube.www.WaterPollution.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import kr.u_cube.www.WaterPollution.dto.SensorInfoDto;
-import kr.u_cube.www.WaterPollution.dto.SensorInfoUpdateDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorInfoDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorInfoUpdateDto;
 import kr.u_cube.www.WaterPollution.service.sensor.SensorInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

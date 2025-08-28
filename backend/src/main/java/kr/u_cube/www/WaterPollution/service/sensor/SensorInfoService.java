@@ -2,8 +2,8 @@ package kr.u_cube.www.WaterPollution.service.sensor;
 
 import org.springframework.stereotype.Service;
 
-import kr.u_cube.www.WaterPollution.dto.SensorInfoDto;
-import kr.u_cube.www.WaterPollution.dto.SensorInfoUpdateDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorInfoDto;
+import kr.u_cube.www.WaterPollution.dto.sensor.SensorInfoUpdateDto;
 import kr.u_cube.www.WaterPollution.entity.SensorInfo;
 import kr.u_cube.www.WaterPollution.repository.SensorInfoRepository;
 import lombok.RequiredArgsConstructor;
