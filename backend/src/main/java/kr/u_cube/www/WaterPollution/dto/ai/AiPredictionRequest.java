@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,6 +27,7 @@ public class AiPredictionRequest {
         private Double bod;     // BOD
         private Double ph;      // pH
         private Double temp;    // 수온
+        @JsonProperty("do")
         private Double do_value; // DO (용존산소) - 'do'는 Java 예약어이므로 do_value 사용
         private Double ec;      // 전기전도도
         private Double no3_n;   // 질산성질소
