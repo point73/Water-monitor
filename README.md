@@ -48,8 +48,13 @@ Water-monitor/
 ├── backend/      # Spring Boot API 서버 (MQTT 구독, DB 연동, 알림)
 ├── AI/           # FastAPI 기반 WQI 예측 서버
 ├── mosquitto/    # MQTT 브로커 설정
-└── monitoring/   # Prometheus / Grafana 설정
+├── monitoring/   # Prometheus / Grafana 설정
+└── docs/         # API / MQTT 등 상세 문서
 ```
+
+## API / MQTT 문서
+
+REST API 엔드포인트 전체 목록과 MQTT 토픽·페이로드 스키마, WebSocket(STOMP) 채널 정리는 [docs/API.md](./docs/API.md) 문서를 참고하세요.
 
 ## 로컬 실행 방법
 
